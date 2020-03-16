@@ -41,8 +41,10 @@
 		<mapping class="br.com.lucas.drogaria.domain.Cliente" />
 		<mapping class="br.com.lucas.drogaria.domain.Estado" />
 		<mapping class="br.com.lucas.drogaria.domain.Fabricante" />
+		<mapping class="br.com.lucas.drogaria.domain.Funcionario" />
 		<mapping class="br.com.lucas.drogaria.domain.Pessoa" />
 		<mapping class="br.com.lucas.drogaria.domain.Produto" />
+		<mapping class="br.com.lucas.drogaria.domain.Usuario" />
 
 
 

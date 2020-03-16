@@ -15,7 +15,8 @@
 		<property name="connection.password">ROOT</property>
 
 		<!-- Pool de Conexões -->
-		<property name="connection.pool_size">1</property>
+		<!-- Alterar esta propriedade para 100 -->
+		<property name="connection.pool_size">100</property>
 
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
@@ -34,7 +35,8 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">create</property>
+		<!-- validate: ele compara o que tem no java e no banco -->
+		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Mapeamento das Entidades -->
 		<mapping class="br.com.lucas.drogaria.domain.Cidade" />

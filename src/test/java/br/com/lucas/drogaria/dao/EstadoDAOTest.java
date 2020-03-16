@@ -51,6 +51,7 @@ public class EstadoDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void excluir(){
 		Long codigo = 9L;
 		EstadoDAO estadoDAO = new EstadoDAO();
@@ -63,6 +64,25 @@ public class EstadoDAOTest {
 			System.out.println("Registro removido:");
 			System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
 		}
+	}
+	
+	@Test
+	public void editar() {
+		Long codigo = 11L;
+		EstadoDAO estadoDAO = new EstadoDAO();
+		Estado estado = estadoDAO.buscar(codigo);
+		
+		if(estado == null){
+			System.out.println("Nenhum registro encontrado");
+		}else{
+			estado.setNome("Santa Catarina");
+			estado.setSigla("SC");
+			estadoDAO.editar(estado);
+			System.out.println("Registro removido:");
+			System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
+		}
+		
+		
 	}
 	
 }

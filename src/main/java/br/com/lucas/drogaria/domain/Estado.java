@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 //Herdando da chave primaria
+@SuppressWarnings("serial")
 @Entity//Ele vai gerar uma tabela nome igual = estado, colunas nomes = atributos 
 public class Estado extends GenericDomain{
 	

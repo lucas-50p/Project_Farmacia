@@ -22,7 +22,7 @@
 		<property name="dialect">org.hibernate.dialect.MariaDB53Dialect</property>
 
 
-		
+
 
 		<!-- Gerenciamento do Contexto das Sessões -->
 		<property name="current_session_context_class">thread</property>
@@ -35,10 +35,13 @@
 
 		<!-- Cria as tabelas do banco de dados -->
 		<property name="hbm2ddl.auto">create</property>
-		
+
 		<!-- Mapeamento das Entidades -->
-		<mapping class="br.com.lucas.drogaria.domain.Estado"/>
+		<mapping class="br.com.lucas.drogaria.domain.Cidade" />
+		<mapping class="br.com.lucas.drogaria.domain.Estado" />
+		<mapping class="br.com.lucas.drogaria.domain.Fabricante" />
 		
+
 	</session-factory>
 
 </hibernate-configuration>

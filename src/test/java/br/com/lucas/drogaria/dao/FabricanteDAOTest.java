@@ -1,4 +1,4 @@
-package br.com.lucas.drogaria;
+package br.com.lucas.drogaria.dao;
 
 import java.util.List;
 

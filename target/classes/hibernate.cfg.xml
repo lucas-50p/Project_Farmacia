@@ -40,7 +40,9 @@
 		<mapping class="br.com.lucas.drogaria.domain.Cidade" />
 		<mapping class="br.com.lucas.drogaria.domain.Estado" />
 		<mapping class="br.com.lucas.drogaria.domain.Fabricante" />
-		
+		<mapping class="br.com.lucas.drogaria.domain.Produto" />
+
+
 
 	</session-factory>
 

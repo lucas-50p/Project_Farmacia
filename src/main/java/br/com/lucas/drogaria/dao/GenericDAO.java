@@ -1,6 +1,10 @@
 package br.com.lucas.drogaria.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -33,6 +37,23 @@ public class GenericDAO <Entidade>{
 			} 
 			throw erro;//error message
 		}finally {
+			sessao.close();
+		}
+	}
+	
+	
+
+	public List<Entidade> listar() {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			CriteriaBuilder builder = sessao.getCriteriaBuilder();
+			CriteriaQuery<Entidade> consulta = builder.createQuery(classe);
+			consulta.from(classe);
+			List<Entidade> resultado = sessao.createQuery(consulta).getResultList();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
 			sessao.close();
 		}
 	}

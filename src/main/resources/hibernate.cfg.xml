@@ -35,7 +35,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<!-- validate: ele compara o que tem no java e no banco -->
+		<!-- validate: ele compara o que tem no java e no banco ; create: quando for alterar domain-->
 		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Mapeamento das Entidades -->

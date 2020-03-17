@@ -8,7 +8,7 @@ import br.com.lucas.drogaria.domain.Fabricante;
 import br.com.lucas.drogaria.domain.Produto;
 
 public class ProdutoDAOTest {
-	
+	/*Falta Criar "editar", "Buscar", "Excluir"*/
 	@Test
 	public void salvar() {
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();

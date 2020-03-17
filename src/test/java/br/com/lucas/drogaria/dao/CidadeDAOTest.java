@@ -9,7 +9,7 @@ import br.com.lucas.drogaria.domain.Cidade;
 import br.com.lucas.drogaria.domain.Estado;
 
 public class CidadeDAOTest {
-
+	/*Falta Criar "editar", "Buscar", "Excluir"*/
 	@Test
 	@Ignore
 	public void salvar() {

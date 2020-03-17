@@ -2,6 +2,7 @@ package br.com.lucas.drogaria.dao;
 
 import java.math.BigDecimal;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.lucas.drogaria.domain.Fabricante;
@@ -10,6 +11,7 @@ import br.com.lucas.drogaria.domain.Produto;
 public class ProdutoDAOTest {
 	/*Falta Criar "editar", "Buscar", "Excluir"*/
 	@Test
+	@Ignore
 	public void salvar() {
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
 		Fabricante fabricante = fabricanteDAO.buscar(3L);

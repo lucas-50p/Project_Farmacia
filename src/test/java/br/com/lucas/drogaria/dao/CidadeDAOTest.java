@@ -24,13 +24,14 @@ public class CidadeDAOTest {
 		CidadeDAO cidadeDAO = new CidadeDAO();
 		cidadeDAO.salvar(cidade);
 	}
+
 	@Test
 	@Ignore
 	public void listar() {
 		CidadeDAO cidadeDAO = new CidadeDAO();
 		List<Cidade> resultado = cidadeDAO.listar();
-		
-		for(Cidade cidade : resultado) {
+
+		for (Cidade cidade : resultado) {
 			System.out.println("Código da Cidade: " + cidade.getCodigo());
 			System.out.println("Nome da Cidade: " + cidade.getNome());
 			System.out.println("Código do Estado: " + cidade.getEstado().getCodigo());
@@ -39,23 +40,42 @@ public class CidadeDAOTest {
 			System.out.println();
 		}
 	}
-	
+
 	@Test
+	@Ignore
 	public void buscar() {
 		Long codigo = 3L;
-		
+
+		CidadeDAO cidadeDAO = new CidadeDAO();
+		Cidade cidade = cidadeDAO.buscar(codigo);
+
+		System.out.println("Código da Cidade: " + cidade.getCodigo());
+		System.out.println("Nome da Cidade: " + cidade.getNome());
+		System.out.println("Código do Estado: " + cidade.getEstado().getCodigo());
+		System.out.println("Sigla do Estado: " + cidade.getEstado().getSigla());
+		System.out.println("Nome do Estado: " + cidade.getEstado().getNome());
+		System.out.println();
+
+	}
+
+	@Test
+	@Ignore
+	public void excluir() {
+		Long codigo = 6L;
+
 		CidadeDAO cidadeDAO = new CidadeDAO();
 		Cidade cidade = cidadeDAO.buscar(codigo);
 		
-	
-			System.out.println("Código da Cidade: " + cidade.getCodigo());
-			System.out.println("Nome da Cidade: " + cidade.getNome());
-			System.out.println("Código do Estado: " + cidade.getEstado().getCodigo());
-			System.out.println("Sigla do Estado: " + cidade.getEstado().getSigla());
-			System.out.println("Nome do Estado: " + cidade.getEstado().getNome());
-			System.out.println();
-			
-			
+		cidadeDAO.excluir(cidade);
 		
+		System.out.println("Cidade Removida");
+		System.out.println("Código da Cidade: " + cidade.getCodigo());
+		System.out.println("Nome da Cidade: " + cidade.getNome());
+		System.out.println("Código do Estado: " + cidade.getEstado().getCodigo());
+		System.out.println("Sigla do Estado: " + cidade.getEstado().getSigla());
+		System.out.println("Nome do Estado: " + cidade.getEstado().getNome());
+		System.out.println();
+
 	}
+
 }

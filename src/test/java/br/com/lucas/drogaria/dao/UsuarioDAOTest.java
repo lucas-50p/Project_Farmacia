@@ -1,5 +1,6 @@
 package br.com.lucas.drogaria.dao;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.lucas.drogaria.domain.Pessoa;
@@ -7,7 +8,7 @@ import br.com.lucas.drogaria.domain.Usuario;
 
 public class UsuarioDAOTest {
 	@Test
-	
+	@Ignore
 	public void salvar(){
 		PessoaDAO pessoaDAO = new PessoaDAO();
 		Pessoa pessoa = pessoaDAO.buscar(1L);

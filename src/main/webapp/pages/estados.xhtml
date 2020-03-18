@@ -8,29 +8,62 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Estados</title>
 </h:head>
-<h:body>
-	<p:panel header="Estado - Listagem">
 
-		<p:dataTable emptyMessage="Nenhum registro encontrado"
-			paginator="true">
+<h:body>
+	<h:form>
+		<p:panel header="Estado - Listagem">
+
+			<p:dataTable emptyMessage="Nenhum registro encontrado"
+				paginator="true">
 			/*sortyBy: ordenar
 			filterBy: fazer pesquisa*/
 			
 			<f:facet name="footer">
-				<p:commandButton value="Novo"></p:commandButton>
-			</f:facet>
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+				</f:facet>
+
+				<p:column headerText="Nome">
+				</p:column>
+
+				<p:column headerText="Sigla">
+				</p:column>
+
+				<p:column headerText="Opções">
+				</p:column>
+
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+
+	<!-- Draggable: não arrastar(false)
+ resizable: redimensionar a tela (false)
+ modal: não click na tela de traz quando tem uma aberta(true)
+ p:outputLabel: É um rotulo, uma menssagem
+ p:inputText: Campo texto
+ size: tamanho do campo...
+ maxlength: Tamanho do caractere
+ columns: corta em 1 e 2 ...
+ hide: oculta tela
+ closable="false": usado para pode fechar só um lado -->
+
+	<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Nome: " />
+				<p:inputText maxlength="50" size="30" />
+
+				<p:outputLabel value="Sigla: " />
+				<p:inputText maxlength="2" size="10" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" onclick="PF('dialogo').hide();">
+				<p:commandButton value="Salvar" />
+				<p:commandButton value="Fechar" />
+			</h:panelGrid>
 			
-			<p:column headerText="Nome">
-			</p:column>
-
-			<p:column headerText="Sigla">
-			</p:column>
-
-			<p:column headerText="Opções">
-			</p:column>
-
-		</p:dataTable>
-
-	</p:panel>
+		</h:form>
+	</p:dialog>
 </h:body>
 </html>

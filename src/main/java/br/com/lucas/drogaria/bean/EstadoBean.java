@@ -1,8 +1,8 @@
 package br.com.lucas.drogaria.bean;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
+
+import org.omnifaces.util.Messages;
 
 /*Faces Mensagem:String encapsulado dentro de outra classe
  * FacesSumamary: seria o erro de forma resumida
@@ -14,10 +14,13 @@ import javax.faces.context.FacesContext;
 @ManagedBean//tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam com a tela
 public class EstadoBean {
 	public void salvar(){
-		String texto = "Programação Web com Java";
+		/*FacesMensagens ---
+		 * String texto = "Programação Web com Java";
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, texto, texto);
 		
 		FacesContext contexto = FacesContext.getCurrentInstance();
-		contexto.addMessage(null, message);
+		contexto.addMessage(null, message);*/
+		
+		Messages.addGlobalInfo("Programação Web com Java");
 	}
 }

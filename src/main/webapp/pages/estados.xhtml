@@ -17,7 +17,7 @@
 		<p:panel header="Estado - Listagem">
 
 			<p:dataTable emptyMessage="Nenhum registro encontrado"
-				paginator="true" value="#{estadoBean.estados}" var="estado">
+				paginator="true" value="#{estadoBean.estados}" var="estado" rows="2">
 			/*sortyBy: ordenar
 			filterBy: fazer pesquisa
 			value="#{estadoBean.estados}: é para vincular um componente da visão com atributo do modelo*/
@@ -28,11 +28,11 @@
 
 				</f:facet>
 
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" sortBy="#{estado.nome}" filterBy="#{estado.nome}">
 					<h:outputText value="#{estado.nome}" />
 				</p:column>
 
-				<p:column headerText="Sigla">
+				<p:column headerText="Sigla" sortBy="#{estado.sigla}" filterBy="#{estado.sigla}">
 					<h:outputText value="#{estado.sigla}" />
 				</p:column>
 				
@@ -53,7 +53,8 @@
  maxlength: Tamanho do caractere
  columns: corta em 1 e 2 ...
  hide: oculta tela
- closable="false": usado para pode fechar só um lado -->
+ closable="false": usado para pode fechar só um lado 
+ rows="5": quantas linhas na pag-->
 
 	<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">

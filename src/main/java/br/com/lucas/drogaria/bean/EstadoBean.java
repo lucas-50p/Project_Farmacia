@@ -7,6 +7,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.omnifaces.util.Messages;
 
+import br.com.lucas.drogaria.dao.EstadoDAO;
 import br.com.lucas.drogaria.domain.Estado;
 
 /*Faces Mensagem:String encapsulado dentro de outra classe
@@ -17,11 +18,12 @@ import br.com.lucas.drogaria.domain.Estado;
  * SEVERITY_INFO:Informação, na tela
  * SEVERITY_ERROR: na tela erro*/
 @SuppressWarnings("serial")
-@ManagedBean//tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam com a tela
-@ViewScoped//Tempo de tela, ficam vivos enquanto estou na tela de estado
-public class EstadoBean implements Serializable{
+@ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam
+				// com a tela
+@ViewScoped // Tempo de tela, ficam vivos enquanto estou na tela de estado
+public class EstadoBean implements Serializable {
 	private Estado estado;
-	
+
 	public Estado getEstado() {
 		return estado;
 	}
@@ -30,23 +32,30 @@ public class EstadoBean implements Serializable{
 		this.estado = estado;
 	}
 
-	
 	public void novo() {
 		estado = new Estado();
 	}
-	
-	public void salvar(){
-		Messages.addGlobalInfo("Name: " + estado.getNome() + " Sigla: " + estado.getSigla());
-		
-		
-		
-		/*FacesMensagens ---
-		 * String texto = "Programação Web com Java";
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, texto, texto);
-		
-		FacesContext contexto = FacesContext.getCurrentInstance();
-		contexto.addMessage(null, message);*/
-		
-		
+
+	public void salvar() {
+		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estadoDAO.salvar(estado);
+
+			novo();
+
+			Messages.addGlobalInfo("Estado salvo com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o estado");
+			erro.printStackTrace();// imprimi pilha de execução o erros gravados em azul
+		}
+
+		/*
+		 * FacesMensagens --- String texto = "Programação Web com Java"; FacesMessage
+		 * message = new FacesMessage(FacesMessage.SEVERITY_ERROR, texto, texto);
+		 * 
+		 * FacesContext contexto = FacesContext.getCurrentInstance();
+		 * contexto.addMessage(null, message);
+		 */
+
 	}
 }

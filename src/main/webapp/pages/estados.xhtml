@@ -10,30 +10,32 @@
 </h:head>
 
 <h:body>
-	<p:growl id="mensagem"/>
+	<p:growl id="mensagem" />
 
 
 	<h:form>
 		<p:panel header="Estado - Listagem">
 
 			<p:dataTable emptyMessage="Nenhum registro encontrado"
-				paginator="true">
+				paginator="true" value="#{estadoBean.estados}" var="estado">
 			/*sortyBy: ordenar
-			filterBy: fazer pesquisa*/
+			filterBy: fazer pesquisa
+			value="#{estadoBean.estados}: é para vincular um componente da visão com atributo do modelo*/
 			
 			<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
-					actionListener="#{estadoBean.novo}"
-					update=":formCadastro:painel"/>
-					
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{estadoBean.novo}" update=":formCadastro:painel" />
+
 				</f:facet>
 
 				<p:column headerText="Nome">
+					<h:outputText value="#{estado.nome}" />
 				</p:column>
 
 				<p:column headerText="Sigla">
+					<h:outputText value="#{estado.sigla}" />
 				</p:column>
-
+				
 				<p:column headerText="Opções">
 				</p:column>
 
@@ -55,23 +57,26 @@
 
 	<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
-		
+
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
 				<p:outputLabel value="Nome: " />
-				<p:inputText maxlength="50" size="30" value="#{estadoBean.estado.nome}"/>
+				<p:inputText maxlength="50" size="30"
+					value="#{estadoBean.estado.nome}" />
 
 				<p:outputLabel value="Sigla: " />
-				<p:inputText maxlength="2" size="10" value="#{estadoBean.estado.sigla}"/>
+				<p:inputText maxlength="2" size="10"
+					value="#{estadoBean.estado.sigla}" />
 			</h:panelGrid>
-			
+
 			<!--acactionListener: chamar algum contole Bean  -->
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{estadoBean.salvar}" 
-				update=":mensagem :formCadastro:painel"/>
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();"/>
+				<p:commandButton value="Salvar"
+					actionListener="#{estadoBean.salvar}"
+					update=":mensagem :formCadastro:painel" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
-			
+
 		</h:form>
 	</p:dialog>
 </h:body>

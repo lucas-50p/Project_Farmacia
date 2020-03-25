@@ -1,7 +1,9 @@
 package br.com.lucas.drogaria.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -23,6 +25,7 @@ import br.com.lucas.drogaria.domain.Estado;
 @ViewScoped // Tempo de tela, ficam vivos enquanto estou na tela de estado
 public class EstadoBean implements Serializable {
 	private Estado estado;
+	private List <Estado> estados;
 
 	public Estado getEstado() {
 		return estado;
@@ -32,6 +35,26 @@ public class EstadoBean implements Serializable {
 		this.estado = estado;
 	}
 
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	//Sempre que trabalhar com visão, vai usar try e catch
+	@PostConstruct//É chamado logo depois construtor da classe
+	public void listar() {
+		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+		} catch (Exception erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar os estado");
+			erro.printStackTrace();// imprimi pilha de execução o erros gravados em azul
+		}
+	}
+	
 	public void novo() {
 		estado = new Estado();
 	}

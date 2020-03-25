@@ -17,7 +17,7 @@
 		<p:panel header="Estado - Listagem">
 
 			<p:dataTable emptyMessage="Nenhum registro encontrado"
-				paginator="true" value="#{estadoBean.estados}" var="estado" rows="2">
+				paginator="true" value="#{estadoBean.estados}" var="estado" rows="5">
 			/*sortyBy: ordenar
 			filterBy: fazer pesquisa
 			value="#{estadoBean.estados}: é para vincular um componente da visão com atributo do modelo*/
@@ -37,10 +37,25 @@
 				</p:column>
 				
 				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash">
+						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
-
+			
+			<!--global(true):qualquer ação que apareça de comfirmação essa janela vai ser chamada
+			type="button": coloca para ele não fazer outro submit
+			styleClass: propriedade do sim ou no-->
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+			
 		</p:panel>
 	</h:form>
 

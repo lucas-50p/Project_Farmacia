@@ -28,23 +28,29 @@
 
 				</f:facet>
 
-				<p:column headerText="Nome" sortBy="#{estado.nome}" filterBy="#{estado.nome}">
+				<p:column headerText="Nome" sortBy="#{estado.nome}"
+					filterBy="#{estado.nome}">
 					<h:outputText value="#{estado.nome}" />
 				</p:column>
 
-				<p:column headerText="Sigla" sortBy="#{estado.sigla}" filterBy="#{estado.sigla}">
+				<p:column headerText="Sigla" sortBy="#{estado.sigla}"
+					filterBy="#{estado.sigla}">
 					<h:outputText value="#{estado.sigla}" />
 				</p:column>
-				
+
+				<!-- value:o curso do var estado -->>
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{estadoBean.excluir}" 
+							update=":mensagem">
 						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
 							icon="ui-icon-alert" />
+						<f:attribute name="estadoSelecionado" value="#{estado}" />
 					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
-			
+
 			<!--global(true):qualquer ação que apareça de comfirmação essa janela vai ser chamada
 			type="button": coloca para ele não fazer outro submit
 			styleClass: propriedade do sim ou no-->
@@ -54,8 +60,8 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
-			
-			
+
+
 		</p:panel>
 	</h:form>
 

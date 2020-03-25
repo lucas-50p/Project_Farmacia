@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -19,6 +20,14 @@ import br.com.lucas.drogaria.domain.Estado;
  * Severity: é o tipo da mensagem, impactar no tipo da cor do primeFace exibi para nos
  * SEVERITY_INFO:Informação, na tela
  * SEVERITY_ERROR: na tela erro*/
+
+/*
+ * FacesMensagens --- String texto = "Programação Web com Java"; FacesMessage
+ * message = new FacesMessage(FacesMessage.SEVERITY_ERROR, texto, texto);
+ * 
+ * FacesContext contexto = FacesContext.getCurrentInstance();
+ * contexto.addMessage(null, message);
+ */
 
 @SuppressWarnings("serial")
 @ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam com a tela
@@ -71,14 +80,11 @@ public class EstadoBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o estado");
 			erro.printStackTrace();// imprimi pilha de execução o erros gravados em azul
 		}
-
-		/*
-		 * FacesMensagens --- String texto = "Programação Web com Java"; FacesMessage
-		 * message = new FacesMessage(FacesMessage.SEVERITY_ERROR, texto, texto);
-		 * 
-		 * FacesContext contexto = FacesContext.getCurrentInstance();
-		 * contexto.addMessage(null, message);
-		 */
-
+		
+	}
+	
+	public void excluir(ActionEvent evento) {
+		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+		Messages.addGlobalInfo("Nome: " + estado.getNome() + " Sigla: " + estado.getSigla());
 	}
 }

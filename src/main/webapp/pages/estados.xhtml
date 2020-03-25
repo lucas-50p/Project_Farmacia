@@ -22,7 +22,9 @@
 			filterBy: fazer pesquisa*/
 			
 			<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
+					actionListener="#{estadoBean.novo}"/>
+					
 				</f:facet>
 
 				<p:column headerText="Nome">
@@ -39,7 +41,7 @@
 		</p:panel>
 	</h:form>
 
-	<!-- Draggable: não arrastar(false)
+	<!-- Draggable: não arrastar tela(false)
  resizable: redimensionar a tela (false)
  modal: não click na tela de traz quando tem uma aberta(true)
  p:outputLabel: É um rotulo, uma menssagem
@@ -55,10 +57,10 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Nome: " />
-				<p:inputText maxlength="50" size="30" />
+				<p:inputText maxlength="50" size="30" value="#{estadoBean.estado.nome}"/>
 
 				<p:outputLabel value="Sigla: " />
-				<p:inputText maxlength="2" size="10" />
+				<p:inputText maxlength="2" size="10" value="#{estadoBean.estado.sigla}"/>
 			</h:panelGrid>
 			
 			<!--acactionListener: chamar algum contole Bean  -->

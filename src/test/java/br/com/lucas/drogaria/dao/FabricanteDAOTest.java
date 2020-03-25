@@ -47,4 +47,22 @@ public class FabricanteDAOTest {
 			System.out.println(fabricante.getCodigo() + " - " + fabricante.getDescricao());
 		}
 	}
+	
+	@Test
+	
+	public void merge() {
+		/*Salvar
+		 * Fabricante fabricante = new Fabricante();
+		fabricante.setDescricao("Fabricante A");
+
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		fabricanteDAO.merge(fabricante);*/
+		
+		//Salvar e Editar, gravar um novo e tambem para editar
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		Fabricante fabricante = fabricanteDAO.buscar(3L);
+		fabricante.setDescricao("Fabricante B");
+		fabricanteDAO.merge(fabricante);
+		
+	}
 }

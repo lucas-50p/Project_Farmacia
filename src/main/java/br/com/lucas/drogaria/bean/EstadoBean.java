@@ -73,7 +73,8 @@ public class EstadoBean implements Serializable {
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estadoDAO.salvar(estado);
 
-			novo();
+			estado = new Estado();//Instanciar o estado
+			estados = estadoDAO.listar();//Recarregar a pesquisa de estado
 
 			Messages.addGlobalInfo("Estado salvo com sucesso");
 		} catch (RuntimeException erro) {

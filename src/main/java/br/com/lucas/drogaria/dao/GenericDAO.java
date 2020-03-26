@@ -21,6 +21,7 @@ public class GenericDAO<Entidade> {
 				.getActualTypeArguments()[0];
 	}
 
+	
 	public void salvar(Entidade entidade) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Transaction transacao = null;
@@ -42,6 +43,7 @@ public class GenericDAO<Entidade> {
 		}
 	}
 
+	
 	public List<Entidade> listar() {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
@@ -57,6 +59,7 @@ public class GenericDAO<Entidade> {
 		}
 	}
 
+	
 	public Entidade buscar(Long codigo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Entidade resultado = null;
@@ -70,17 +73,18 @@ public class GenericDAO<Entidade> {
 		}
 	}
 	
+	
 	public void excluir(Entidade entidade) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Transaction transacao = null;
 
 		/*
-		 * Se de erro em alguma linha entra no catch finally fechat uma sessao
+		 * Se de erro em alguma linha entra no catch finally fecha uma sessao
 		 */
 		try {
 			transacao = sessao.beginTransaction();
 			sessao.delete(entidade);
-			transacao.commit();// comfirma ,Termina
+			transacao.commit();// confirma ,Termina
 		} catch (RuntimeException erro) {// verifica se a transacao e diferente de nulo
 			if (transacao != null) {
 				transacao.rollback();// reversão
@@ -96,7 +100,7 @@ public class GenericDAO<Entidade> {
 		Transaction transacao = null;
 
 		/*
-		 * Se de erro em alguma linha entra no catch finally fechat uma sessao
+		 * Se de erro em alguma linha entra no catch finally fecha uma sessao
 		 */
 		try {
 			transacao = sessao.beginTransaction();
@@ -117,7 +121,7 @@ public class GenericDAO<Entidade> {
 		Transaction transacao = null;
 
 		/*
-		 * Se de erro em alguma linha entra no catch finally fechat uma sessao
+		 * Se de erro em alguma linha entra no catch finally fecha uma sessao
 		 */
 		try {
 			transacao = sessao.beginTransaction();

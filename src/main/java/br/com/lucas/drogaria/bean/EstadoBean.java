@@ -30,11 +30,12 @@ import br.com.lucas.drogaria.domain.Estado;
  */
 
 @SuppressWarnings("serial")
-@ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam com a tela
+@ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam
+				// com a tela
 @ViewScoped // Tempo de tela, ficam vivos enquanto estou na tela de estado
 public class EstadoBean implements Serializable {
 	private Estado estado;
-	private List <Estado> estados;
+	private List<Estado> estados;
 
 	public Estado getEstado() {
 		return estado;
@@ -52,8 +53,8 @@ public class EstadoBean implements Serializable {
 		this.estados = estados;
 	}
 
-	//Sempre que trabalhar com visão, vai usar try e catch
-	@PostConstruct//É chamado logo depois construtor da classe
+	// Sempre que trabalhar com visão, vai usar try e catch
+	@PostConstruct // É chamado logo depois construtor da classe
 	public void listar() {
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();
@@ -63,7 +64,7 @@ public class EstadoBean implements Serializable {
 			erro.printStackTrace();// imprimi pilha de execução o erros gravados em azul
 		}
 	}
-	
+
 	public void novo() {
 		estado = new Estado();
 	}
@@ -73,19 +74,30 @@ public class EstadoBean implements Serializable {
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estadoDAO.salvar(estado);
 
-			estado = new Estado();//Instanciar o estado
-			estados = estadoDAO.listar();//Recarregar a pesquisa de estado
+			estado = new Estado();// Instanciar o estado
+			estados = estadoDAO.listar();// Recarregar a pesquisa de estado
 
 			Messages.addGlobalInfo("Estado salvo com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o estado");
 			erro.printStackTrace();// imprimi pilha de execução o erros gravados em azul
 		}
-		
+
 	}
-	
+
 	public void excluir(ActionEvent evento) {
-		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
-		Messages.addGlobalInfo("Nome: " + estado.getNome() + " Sigla: " + estado.getSigla());
+		try {
+			estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estadoDAO.excluir(estado);
+
+			estados = estadoDAO.listar();//Forçar ele recarregar os estados
+			
+			Messages.addGlobalInfo("Estado removido com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o estado");
+			erro.printStackTrace();// Pilha de execução
+		}
 	}
 }

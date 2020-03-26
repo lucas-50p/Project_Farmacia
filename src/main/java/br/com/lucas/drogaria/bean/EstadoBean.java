@@ -72,7 +72,7 @@ public class EstadoBean implements Serializable {
 	public void salvar() {
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estadoDAO.salvar(estado);
+			estadoDAO.merge(estado);
 
 			estado = new Estado();// Instanciar o estado
 			estados = estadoDAO.listar();// Recarregar a pesquisa de estado
@@ -100,4 +100,10 @@ public class EstadoBean implements Serializable {
 			erro.printStackTrace();// Pilha de execução
 		}
 	}
+	
+	public void editar(ActionEvent evento){
+		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+	}
+	
+	
 }

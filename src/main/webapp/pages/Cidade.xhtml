@@ -10,17 +10,28 @@
 </h:head>
 <h:body>
 	<h:form>
+		<!-- value="#{cidadeBean.cidades}": vinculei manageBean com o meu xhtml
+	Var: É o cursor -->
 		<p:panel header="Cidades - Listagem">
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
+				paginator="true" value="#{cidadeBean.cidades}" var="cidade" rows="5">
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
 				</f:facet>
-
-				<p:column headerText="Nome">
+				
+				/*sortyBy: ordenar
+				filterBy: fazer pesquisa
+				value="#{cidadeBean.estados}: é para vincular um componente da visão com atributo do modelo*/
+				
+				<p:column headerText="Nome" filterBy="#{cidade.nome}"
+					sortBy="#{cidade.nome}">
+					<h:outputText value="#{cidade.nome}" />
 				</p:column>
 
-				<p:column headerText="Estado">
+				<p:column headerText="Estado" filterBy="#{cidade.estado.nome}" sortBy="#{cidade.estado.nome}">
+					<h:outputText value="#{cidade.estado.nome}" />
+					<h:outputText value="-" />
+					<h:outputText value="#{cidade.estado.sigla}" />
 				</p:column>
 
 				<p:column headerText="Opções">
@@ -35,7 +46,7 @@
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Nome:" />
 				<p:inputText maxlength="50" size="30" />
-				
+
 				<p:outputLabel value="Estado:" />
 				<p:selectOneMenu filter="true">
 					<f:selectItem itemValue="" itemLabel="Selecione um estado" />

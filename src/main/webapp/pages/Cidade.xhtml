@@ -9,6 +9,7 @@
 	<title>Cidades</title>
 </h:head>
 <h:body>
+	<p:growl id="mensagem" />
 	<h:form>
 		<!-- value="#{cidadeBean.cidades}": vinculei manageBean com o meu xhtml
 	Var: É o cursor
@@ -17,10 +18,9 @@
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{cidadeBean.cidades}" var="cidade" rows="5">
 				<f:facet name="footer">
-					<p:commandButton value="Novo" 
-					actionListener="#{cidadeBean.novo}"
-					oncomplete="PF('dialogo').show();"
-					update=":formCadastro:painel"/>
+					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel" />
 				</f:facet>
 				
 				/*sortyBy: ordenar
@@ -32,7 +32,8 @@
 					<h:outputText value="#{cidade.nome}" />
 				</p:column>
 
-				<p:column headerText="Estado" filterBy="#{cidade.estado.nome}" sortBy="#{cidade.estado.nome}">
+				<p:column headerText="Estado" filterBy="#{cidade.estado.nome}"
+					sortBy="#{cidade.estado.nome}">
 					<h:outputText value="#{cidade.estado.nome}" />
 					<h:outputText value="-" />
 					<h:outputText value="#{cidade.estado.sigla}" />
@@ -47,14 +48,21 @@
 	<p:dialog header="Cidades - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
-			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel value="Nome:" />
-				<p:inputText maxlength="50" size="30" value="#{cidadeBean.cidade.nome}"/>
-
+			<h:panelGrid id="painel" columns="1">
+				<p:outputLabel value="Nome:"/>
+				<p:inputText maxlength="50" size="30"
+					value="#{cidadeBean.cidade.nome}" />
+				<!-- var: cursor
+					itemLabel: O que aparece para usuario
+					itemValue: Gravo no Banco
+					noSelectionOption="true": Opção não item valida-->
 				<p:outputLabel value="Estado:" />
 				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}">
-					<f:selectItem itemValue="" itemLabel="Selecione um estado" />
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um estado" />
+					<f:selectItems value="#{cidadeBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome}" />
 				</p:selectOneMenu>
+			
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">

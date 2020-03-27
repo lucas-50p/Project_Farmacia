@@ -70,20 +70,28 @@
 
 	</h:form>
 
+	<!-- required="true": Campo obrigatorio 
+	outputLabel: Éle trabalha em parceria com campos de entrada(tipo inputText) se
+	ele foi um campo obrigatorio o primeFace automaticamente já 
+	already desenha-->
 	<p:dialog header="Cidades - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="1">
-				<p:outputLabel value="Nome:" />
-				<p:inputText maxlength="50" size="30"
-					value="#{cidadeBean.cidade.nome}" />
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" maxlength="50" size="30"
+					value="#{cidadeBean.cidade.nome}" required="true"
+					requiredMessage="O campo 'Name' é obrigatorio"/>
+			
 				<!-- var: cursor
 					itemLabel: O que aparece para usuario
 					itemValue: Gravo no Banco
 					noSelectionOption="true": Opção não item valida-->
-				<p:outputLabel value="Estado:" />
-				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}"
-					converter="omnifaces.SelectItemsConverter">
+					
+				<p:outputLabel for="estado" value="Estado:" />
+				<p:selectOneMenu id="estado" filter="true" value="#{cidadeBean.cidade.estado}"
+					converter="omnifaces.SelectItemsConverter"
+					required="true" requiredMessage="O campo 'Estado' é obrigatorio">
 					<f:selectItem noSelectionOption="true"
 						itemLabel="Selecione um estado" />
 					<f:selectItems value="#{cidadeBean.estados}" var="estado"

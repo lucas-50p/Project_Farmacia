@@ -82,13 +82,23 @@
 			<version>5.2</version>
 		</dependency>
 
-	
-		<!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces, OmniFaces - versão: 1.11-->
+
+		<!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces, OmniFaces 
+			- versão: 1.11 -->
 		<dependency>
 			<groupId>org.omnifaces</groupId>
 			<artifactId>omnifaces</artifactId>
 			<version>1.11</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api, SERVLET -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 </project>

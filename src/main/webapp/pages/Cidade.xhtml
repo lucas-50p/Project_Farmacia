@@ -14,7 +14,7 @@
 		<!-- value="#{cidadeBean.cidades}": vinculei manageBean com o meu xhtml
 	Var: É o cursor
 	actionListene: chama um metodo do managebean -->
-	 
+
 		<p:panel header="Cidades - Listagem">
 			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{cidadeBean.cidades}" var="cidade" rows="5">
@@ -50,7 +50,7 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="1">
-				<p:outputLabel value="Nome:"/>
+				<p:outputLabel value="Nome:" />
 				<p:inputText maxlength="50" size="30"
 					value="#{cidadeBean.cidade.nome}" />
 				<!-- var: cursor
@@ -58,18 +58,21 @@
 					itemValue: Gravo no Banco
 					noSelectionOption="true": Opção não item valida-->
 				<p:outputLabel value="Estado:" />
-				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}">
-					<f:selectItem noSelectionOption="true" itemLabel="Selecione um estado" />
+				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um estado" />
 					<f:selectItems value="#{cidadeBean.estados}" var="estado"
-						itemValue="#{estado}" itemLabel="#{estado.nome} - #{estado.sigla}"/>
+						itemValue="#{estado}" itemLabel="#{estado.nome} - #{estado.sigla}" />
 				</p:selectOneMenu>
-			
+
 			</h:panelGrid>
 
 
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{cidadeBean.salvar}"
-					update=":mensagem :formCadastro:painel :formListagem:tabela"/>
+				<p:commandButton value="Salvar"
+					actionListener="#{cidadeBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>

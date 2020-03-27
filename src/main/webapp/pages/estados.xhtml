@@ -47,7 +47,8 @@
 							icon="ui-icon-alert" />
 						<f:attribute name="estadoSelecionado" value="#{estado}" />
 					</p:commandButton>
-
+					
+					<!-- EDITAR -->
 					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{estadoBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
@@ -99,6 +100,7 @@
 			</h:panelGrid>
 
 			<!--acactionListener: chamar algum contole Bean  -->
+			<!-- SALVAR -->
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar"
 					actionListener="#{estadoBean.salvar}"

@@ -101,6 +101,7 @@ public class EstadoBean implements Serializable {
 		}
 	}
 	
+	/*Não coloquei try e catch, não estou manipulando o banco de dados*/
 	public void editar(ActionEvent evento){
 		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
 	}

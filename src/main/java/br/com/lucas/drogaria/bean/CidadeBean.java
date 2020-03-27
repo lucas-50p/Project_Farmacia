@@ -72,7 +72,7 @@ public class CidadeBean implements Serializable {
 		}
 	}
 	
-	public void salvar() {
+	public void salvar() {//Server para incluir e salvar
 		try {
 			CidadeDAO cidadeDAO = new CidadeDAO();
 			cidadeDAO.merge(cidade);//o merge serve para Editar e incluir
@@ -105,5 +105,20 @@ public class CidadeBean implements Serializable {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover a cidade");
 			erro.printStackTrace();// Pilha de execução
 		}
+	}
+	
+	public void editar(ActionEvent evento) {
+		try {
+			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");
+
+			EstadoDAO estadoDAO = new EstadoDAO();//Criar o dao
+			estados = estadoDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar selecionar uma cidade!");
+			erro.printStackTrace();
+		}
+		
+		cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");
+
 	}
 }

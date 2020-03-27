@@ -10,12 +10,13 @@
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
-	<h:form>
+	<h:form id="formListagem">
 		<!-- value="#{cidadeBean.cidades}": vinculei manageBean com o meu xhtml
 	Var: É o cursor
 	actionListene: chama um metodo do managebean -->
+	 
 		<p:panel header="Cidades - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{cidadeBean.cidades}" var="cidade" rows="5">
 				<f:facet name="footer">
 					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo}"
@@ -60,13 +61,15 @@
 				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}">
 					<f:selectItem noSelectionOption="true" itemLabel="Selecione um estado" />
 					<f:selectItems value="#{cidadeBean.estados}" var="estado"
-						itemValue="#{estado}" itemLabel="#{estado.nome}" />
+						itemValue="#{estado}" itemLabel="#{estado.nome} - #{estado.sigla}"/>
 				</p:selectOneMenu>
 			
 			</h:panelGrid>
 
+
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" />
+				<p:commandButton value="Salvar" actionListener="#{cidadeBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela"/>
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>

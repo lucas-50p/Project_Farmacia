@@ -24,9 +24,12 @@
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</f:facet>
-
+				<!-- Locale: convert o ponto para virgula
+				minFractionDigits: quantos numeros depois da virgula -->
 				<p:column headerText="Descrição">
-					<h:outputText value="#{produto.descricao}" />
+					<h:outputText value="#{produto.descricao}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Quantidade">
@@ -42,7 +45,7 @@
 				</p:column>
 
 				<p:column headerText="Opções">
-				<!-- EXCLUIR -->
+					<!-- EXCLUIR -->
 					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{produtoBean.excluir}"
 						update=":mensagem :formListagem:tabela">
@@ -50,7 +53,7 @@
 							message="Deseja excluir o produto?" icon="ui-icon-alert" />
 						<f:attribute name="produtoSelecionado" value="#{produto}" />
 					</p:commandButton>
-					
+
 					<!-- EDITAR -->
 					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{produtoBean.editar}"
@@ -89,19 +92,21 @@
 					requiredMessage="O campo 'Quantidade' é obrigatório"
 					converterMessage="Informe um valor válido para o campo 'Quantidade'"
 					validatorMessage="Informe um value entre 0 e 1000 para o campo 'Quantidade'">
-					<f:validateLongRange minimum="0" maximum="1000"/>
+					<f:validateLongRange minimum="0" maximum="1000" />
 				</p:inputText>
-				
+
 				<!-- validateDoubleRange:Serve para valores float, double  -->
 				<p:outputLabel value="Preço:" />
 				<p:inputText maxlength="7" size="10"
 					value="#{produtoBean.produto.preco}" required="true"
 					requiredMessage="O campo 'Preço' é obrigatório"
-					converterMessage="Informe um valor válido para o campo 'Preço' " 
+					converterMessage="Informe um valor válido para o campo 'Preço' "
 					validatorMessage="Informe um value entre 0.01 e 9999.99 para o campo 'Preço'">
-					<f:validateDoubleRange minimum="0.01" maximum="9999.99"/>
+					<f:validateDoubleRange minimum="0.01" maximum="9999.99" />
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+
 				</p:inputText>
-				
+
 				<p:outputLabel value="Fabricante:" />
 				<p:selectOneMenu filter="true"
 					value="#{produtoBean.produto.fabricante}"

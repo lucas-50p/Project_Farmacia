@@ -3,6 +3,7 @@ package br.com.lucas.drogaria.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -46,7 +47,8 @@ public class ProdutoBean implements Serializable {
 	public void setFabricantes(List<Fabricante> fabricantes) {
 		this.fabricantes = fabricantes;
 	}
-
+	
+	@PostConstruct// Chamar quando a tela criada
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -62,6 +64,7 @@ public class ProdutoBean implements Serializable {
 	public void novo() {
 		try {
 			produto = new Produto();
+			
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
 

@@ -42,6 +42,7 @@
 				</p:column>
 
 				<p:column headerText="Opções">
+				<!-- EXCLUIR -->
 					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{produtoBean.excluir}"
 						update=":mensagem :formListagem:tabela">
@@ -49,7 +50,8 @@
 							message="Deseja excluir o produto?" icon="ui-icon-alert" />
 						<f:attribute name="produtoSelecionado" value="#{produto}" />
 					</p:commandButton>
-
+					
+					<!-- EDITAR -->
 					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{produtoBean.editar}"
 						update=":mensagem :formCadastro:painel"
@@ -73,25 +75,33 @@
 	<p:dialog header="Produtos - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
-			<h:panelGrid id="painel" columns="2">
+			<h:panelGrid id="painel" columns="1">
 				<p:outputLabel value="Descrição:" />
 				<p:inputText maxlength="50" size="30"
 					value="#{produtoBean.produto.descricao}" required="true"
 					requiredMessage="O campo 'Descrição' é obrigatório" />
-
+				<!-- validateReges: validar CPF e email 
+				validateLongRange: quantidade de produto que voçê quer colocar
+				validatorMessage: serve para personalizar a menssagem de erro-->
 				<p:outputLabel value="Quantidade:" />
 				<p:inputText maxlength="5" size="10"
 					value="#{produtoBean.produto.quantidade}" required="true"
 					requiredMessage="O campo 'Quantidade' é obrigatório"
-					converterMessage="Informe um valor válido para o campo 'Quantidade'" />
+					converterMessage="Informe um valor válido para o campo 'Quantidade'"
+					validatorMessage="Informe um value entre 0 e 1000 para o campo 'Quantidade'">
+					<f:validateLongRange minimum="0" maximum="1000"/>
+				</p:inputText>
 				
-				
+				<!-- validateDoubleRange:Serve para valores float, double  -->
 				<p:outputLabel value="Preço:" />
 				<p:inputText maxlength="7" size="10"
 					value="#{produtoBean.produto.preco}" required="true"
 					requiredMessage="O campo 'Preço' é obrigatório"
-					converterMessage="Informe um valor válido para o campo 'Preço''" />
-
+					converterMessage="Informe um valor válido para o campo 'Preço' " 
+					validatorMessage="Informe um value entre 0.01 e 9999.99 para o campo 'Preço'">
+					<f:validateDoubleRange minimum="0.01" maximum="9999.99"/>
+				</p:inputText>
+				
 				<p:outputLabel value="Fabricante:" />
 				<p:selectOneMenu filter="true"
 					value="#{produtoBean.produto.fabricante}"
@@ -104,7 +114,7 @@
 				</p:selectOneMenu>
 
 			</h:panelGrid>
-
+			<!-- SALVAR -->
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar"
 					actionListener="#{produtoBean.salvar}"

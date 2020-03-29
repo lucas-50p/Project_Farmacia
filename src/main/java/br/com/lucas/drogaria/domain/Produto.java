@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 public class Produto extends GenericDomain{
 	
 	/*lenght: tamanho do text 
-	 * nullable: obligation campo text
+	 * nullable: obrigatório campo text
 	 * short,int... em minusculos são tipos primitivos cujo os valores é zero
 	 * ao contrario nulo
 	 * big decimal: um valor real, interessante para valores monetarios */

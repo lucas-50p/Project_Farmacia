@@ -1,6 +1,7 @@
 package br.com.lucas.drogaria.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,7 +11,10 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
+import br.com.lucas.drogaria.dao.EstadoDAO;
 import br.com.lucas.drogaria.dao.PessoaDAO;
+import br.com.lucas.drogaria.domain.Cidade;
+import br.com.lucas.drogaria.domain.Estado;
 import br.com.lucas.drogaria.domain.Pessoa;
 
 @SuppressWarnings("serial")
@@ -19,11 +23,31 @@ import br.com.lucas.drogaria.domain.Pessoa;
 public class PessoaBean implements Serializable {
 	private Pessoa pessoa;
 	private List<Pessoa> pessoas;
+
+	private List<Estado> estados;
+	private List<Cidade> cidades;
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
-	
-	@PostConstruct// Chamar quando a tela criada
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
+
+	@PostConstruct // Chamar quando a tela criada
 	public void listar() {
 		try {
 			PessoaDAO pessoaDAO = new PessoaDAO();
@@ -34,21 +58,32 @@ public class PessoaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 	public List<Pessoa> getPessoas() {
 		return pessoas;
 	}
-	
+
 	public void setPessoas(List<Pessoa> pessoas) {
 		this.pessoas = pessoas;
 	}
-	
-	public void novo() {
 
+	public void novo() {
+		try {
+			pessoa = new Pessoa();
+
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+
+			cidades = new ArrayList<Cidade>();// Instanciando a listagem da Cidade vazia, aparecer quando click no
+												// estado
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar uma pessoa nova");
+			erro.printStackTrace();
+		}
 	}
 
 	public void editar(ActionEvent evento) {
@@ -62,5 +97,5 @@ public class PessoaBean implements Serializable {
 	public void excluir(ActionEvent evento) {
 
 	}
-	
+
 }

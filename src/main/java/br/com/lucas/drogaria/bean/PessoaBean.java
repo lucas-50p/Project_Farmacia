@@ -11,6 +11,7 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
+import br.com.lucas.drogaria.dao.CidadeDAO;
 import br.com.lucas.drogaria.dao.EstadoDAO;
 import br.com.lucas.drogaria.dao.PessoaDAO;
 import br.com.lucas.drogaria.domain.Cidade;
@@ -21,9 +22,10 @@ import br.com.lucas.drogaria.domain.Pessoa;
 @ManagedBean
 @ViewScoped
 public class PessoaBean implements Serializable {
-	private Pessoa pessoa;
+	private Pessoa pessoa;//A cidade está dentro da pessoa
 	private List<Pessoa> pessoas;
-
+	
+	private Estado estado;
 	private List<Estado> estados;
 	private List<Cidade> cidades;
 
@@ -37,6 +39,14 @@ public class PessoaBean implements Serializable {
 
 	public void setEstados(List<Estado> estados) {
 		this.estados = estados;
+	}
+	
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	public List<Cidade> getCidades() {
@@ -96,6 +106,26 @@ public class PessoaBean implements Serializable {
 
 	public void excluir(ActionEvent evento) {
 
+	}
+	//Polular as cidades com base no estado
+	public void popular() {
+		//System.out.println("Código: " + estado.getCodigo() + "\nNome: " + estado.getNome());
+		//System.out.println("Total: " + cidades.size());
+		//cidades = new ArrayList<Cidade>();: No diamante pode colocar cidade ou no(escolha)
+		try {
+				if (estado != null) {
+					CidadeDAO cidadeDAO = new CidadeDAO();
+					cidades = cidadeDAO.buscarPorEstado(estado.getCodigo());
+				}else {
+					cidades = new ArrayList<>();
+					
+				}
+				
+			
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar filtrar as cidades");
+			erro.printStackTrace();
+		}
 	}
 
 }

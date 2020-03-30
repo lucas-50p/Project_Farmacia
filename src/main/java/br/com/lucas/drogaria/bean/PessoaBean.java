@@ -84,6 +84,8 @@ public class PessoaBean implements Serializable {
 	public void novo() {
 		try {
 			pessoa = new Pessoa();
+			
+			estado = new Estado();
 
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estados = estadoDAO.listar();
@@ -97,15 +99,57 @@ public class PessoaBean implements Serializable {
 	}
 
 	public void editar(ActionEvent evento) {
-
-	}
+		  try {
+		   CidadeDAO cidadeDao = new CidadeDAO();
+		   cidades = cidadeDao.listar();
+		   
+		   EstadoDAO estadoDao = new EstadoDAO();
+		   estados = estadoDao.listar();
+		   
+		   pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
+		      
+		   estado = pessoa.getCidade().getEstado();
+		   
+		  }catch(RuntimeException erro) {
+		   Messages.addGlobalError("Ocorreu um erro ao tentar editar a pessoa!");
+		   erro.printStackTrace();
+		  }
+		 }
 
 	public void salvar() {
+		//pessoas = pessoaDAO.listar();
+		try {
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoaDAO.merge(pessoa);
+			
+			pessoas = pessoaDAO.listar();
+			
+			pessoa = new Pessoa();
+			
+			estado = new Estado();
 
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();//Recarregar as pessoas
+
+			cidades = new ArrayList<>();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a pessoa");
+			erro.printStackTrace();
+		}
 	}
 
 	public void excluir(ActionEvent evento) {
-
+		try {
+			pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
+			
+			  PessoaDAO pessoaDAO = new PessoaDAO();
+			  pessoaDAO.excluir(this.pessoa);
+			  
+			  pessoas = pessoaDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar 'excluir' a pessoa");
+			erro.printStackTrace();
+		}
 	}
 	//Polular as cidades com base no estado
 	public void popular() {
@@ -118,7 +162,6 @@ public class PessoaBean implements Serializable {
 					cidades = cidadeDAO.buscarPorEstado(estado.getCodigo());
 				}else {
 					cidades = new ArrayList<>();
-					
 				}
 				
 			

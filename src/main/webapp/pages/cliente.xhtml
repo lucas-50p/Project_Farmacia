@@ -10,16 +10,20 @@
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
-	
-	<h:form>
+
+	<h:form id="formListagem">
 		<p:panel header="Clientes - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{clienteBean.clientes}" var="cliente"
 				rows="5">
-				<f:facet name="header">
+				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{clienteBean.novo}"
-						update=":mensagem :formCadastro:painel" />
+						update=":mensagem :formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
 				</f:facet>
 
 				<p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}"
@@ -50,24 +54,41 @@
 		</p:panel>
 	</h:form>
 
+<!-- id e for que amarra os dois componentes -->
+	<!-- noSelectionOption="true": Essa primeira opção é uma  deve ser ignorada, id e for que amarra os dois componentes-->
+		<!-- id e for que amarra os dois componentes
+					campo liberado:(false) não marcado nd, ja é um preenchimento   -->
 	<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel value="Pessoa:" />
-				<p:selectOneMenu filter="true">
-					<f:selectItem itemValue="" itemLabel="Selecione uma pessoa" />
+				<p:outputLabel for="pessoa" value="Pessoa:" />
+				<p:selectOneMenu id="pessoa" filter="true"
+					value="#{clienteBean.cliente.pessoa}" required="true"
+					requiredMessage="O campo 'Pessoa' obrigatório"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma pessoa" />
+					<f:selectItems value="#{clienteBean.pessoas}" var="pessoa"
+						itemValue="#{pessoa}" itemLabel="#{pessoa.nome} - #{pessoa.cpf}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Data de Cadastro:" />
-				<p:calendar />
+				<p:outputLabel for="dataCadastro" value="Data de Cadastro:" />
+				<p:calendar id="dataCadastro"
+					value="#{clienteBean.cliente.dataCadastro}" required="true"
+					requiredMessage="O campo 'Data de Cadastro' é obrigatório"
+					size="15" />
 
-				<p:outputLabel value="Liberado:" />
-				<p:selectBooleanCheckbox />
+				<p:outputLabel for="liberado" value="Liberado:" />
+				<p:selectBooleanCheckbox id="liberado"
+					value="#{clienteBean.cliente.liberado}" required="true"
+					requiredMessage="O campo 'Liberado' é obrigatório" />
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" />
+				<p:commandButton value="Salvar"
+				update=":mensagem :formCadastro:painel :formListagem:tabela"
+					actionListener="#{clienteBean.salvar}"/>
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>

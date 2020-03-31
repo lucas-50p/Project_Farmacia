@@ -3,11 +3,10 @@ package br.com.lucas.drogaria.dao;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 
 import br.com.lucas.drogaria.util.HibernateUtil;
 
@@ -44,13 +43,27 @@ public class GenericDAO<Entidade> {
 	}
 
 	
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Entidade> listar() {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
-			CriteriaBuilder builder = sessao.getCriteriaBuilder();
-			CriteriaQuery<Entidade> consulta = builder.createQuery(classe);
-			consulta.from(classe);
-			List<Entidade> resultado = sessao.createQuery(consulta).getResultList();
+			Criteria consulta = sessao.createCriteria(classe);
+			List<Entidade> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Entidade> listar(String campoOrdenacao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(classe);
+			consulta.addOrder(Order.asc(campoOrdenacao));
+			List<Entidade> resultado = consulta.list();
 			return resultado;
 		} catch (RuntimeException erro) {
 			throw erro;

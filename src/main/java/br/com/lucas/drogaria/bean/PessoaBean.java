@@ -57,17 +57,7 @@ public class PessoaBean implements Serializable {
 		this.cidades = cidades;
 	}
 
-	@PostConstruct // Chamar quando a tela criada
-	public void listar() {
-		try {
-			PessoaDAO pessoaDAO = new PessoaDAO();
-			pessoas = pessoaDAO.listar();
-
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar as pessoas");
-			erro.printStackTrace();
-		}
-	}
+	
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
@@ -171,4 +161,15 @@ public class PessoaBean implements Serializable {
 		}
 	}
 
+	@PostConstruct // Chamar quando a tela criada
+	public void listar() {
+		try {
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoas = pessoaDAO.listar();
+
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar as pessoas");
+			erro.printStackTrace();
+		}
+	}
 }

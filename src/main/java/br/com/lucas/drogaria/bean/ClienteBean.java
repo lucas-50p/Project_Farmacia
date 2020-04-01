@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -87,6 +88,22 @@ public class ClienteBean implements Serializable{
 			erro.printStackTrace();
 		}
 		
+	}
+	
+	public void excluir(ActionEvent evento) {
+		try {
+			cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
+
+			ClienteDAO clienteDAO = new ClienteDAO();
+			clienteDAO.excluir(cliente);
+
+			clientes = clienteDAO.listar();//Forçar ele recarregar os estados
+			
+			Messages.addGlobalInfo("Estado removido com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o 'cliente'");
+			erro.printStackTrace();// Pilha de execução
+		}
 	}
 	
 }

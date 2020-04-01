@@ -7,6 +7,7 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Clientes</title>
+	<h:outputScript library="js" name="scripts.js"/>
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
@@ -53,11 +54,7 @@
 			</p:dataTable>
 		</p:panel>
 	</h:form>
-
-<!-- id e for que amarra os dois componentes -->
-	<!-- noSelectionOption="true": Essa primeira opção é uma  deve ser ignorada, id e for que amarra os dois componentes-->
-		<!-- id e for que amarra os dois componentes
-					campo liberado:(false) não marcado nd, ja é um preenchimento   -->
+					
 	<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
@@ -77,7 +74,7 @@
 				<p:calendar id="dataCadastro"
 					value="#{clienteBean.cliente.dataCadastro}" required="true"
 					requiredMessage="O campo 'Data de Cadastro' é obrigatório"
-					size="15" />
+					size="15" locale="pt_BR" />
 
 				<p:outputLabel for="liberado" value="Liberado:" />
 				<p:selectBooleanCheckbox id="liberado"

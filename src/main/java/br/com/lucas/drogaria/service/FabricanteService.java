@@ -11,7 +11,7 @@ import br.com.lucas.drogaria.dao.FabricanteDAO;
 import br.com.lucas.drogaria.domain.Fabricante;
 
 //Json é uma forma textual de representar as coisas, ele gasta menos espaços
-//http://127.0.0.1:8080/Drogaria/rest/fabricante
+//http://127.0.0.1:8081/Drogaria/rest/fabricante
 @Path("fabricante")
 public class FabricanteService {
 	@GET //Retornar

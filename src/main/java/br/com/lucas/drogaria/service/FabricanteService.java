@@ -3,6 +3,7 @@ package br.com.lucas.drogaria.service;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -27,7 +28,7 @@ public class FabricanteService {
 		return json;
 	}
 	//http://127.0.0.1:8081/Drogaria/rest/fabricante/{codigo}
-	// http://127.0.0.1:8080/Drogaria/rest/fabricante/10
+	// http://127.0.0.1:8081/Drogaria/rest/fabricante/10
 	//@PathParam("{codigo}"): Estou amarrando objeto código ao parametro código
 	@GET
 	@Path("{codigo}")
@@ -39,6 +40,21 @@ public class FabricanteService {
 		String json = gson.toJson(fabricante);
 		
 		return json;
+	}
+	//http://127.0.0.1:8081/Drogaria/rest/fabricante
+	//ERROR 500, erro de servidor tento fazer processamento ele no conseguiu
+	/*204: ele fez uma chamada 200 sem sucesso, ele chamou salvar no retornou nada
+	NO teve nenhum conteudo de retorno*/
+	@POST
+	public String salvar(String json) {
+		Gson gson = new Gson();
+		Fabricante fabricante = gson.fromJson(json, Fabricante.class);
+		
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		fabricanteDAO.merge(fabricante);
+		
+		String jsonSaida = gson.toJson(fabricante);
+		return jsonSaida;
 	}
 	
 }

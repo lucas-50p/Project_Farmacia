@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -45,6 +46,7 @@ public class FabricanteService {
 	//ERROR 500, erro de servidor tento fazer processamento ele no conseguiu
 	/*204: ele fez uma chamada 200 sem sucesso, ele chamou salvar no retornou nada
 	NO teve nenhum conteudo de retorno*/
+	//Salvar
 	@POST
 	public String salvar(String json) {
 		Gson gson = new Gson();
@@ -52,6 +54,18 @@ public class FabricanteService {
 		
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
 		fabricanteDAO.merge(fabricante);
+		
+		String jsonSaida = gson.toJson(fabricante);
+		return jsonSaida;
+	}
+	//Editar
+	@PUT
+	public String editar(String json) {
+		Gson gson = new Gson();
+		Fabricante fabricante = gson.fromJson(json, Fabricante.class);
+		
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		fabricanteDAO.editar(fabricante);
 		
 		String jsonSaida = gson.toJson(fabricante);
 		return jsonSaida;

@@ -2,6 +2,7 @@ package br.com.lucas.drogaria.service;
 
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -71,4 +72,19 @@ public class FabricanteService {
 		return jsonSaida;
 	}
 	
+	//Transiente: ele é um objeto que não faz parte da seção do hibernate
+	//Persistente: ele é um objeto que faz parte a seção do hibernate
+	//http://127.0.0.1:8081/Drogaria/rest/fabricante
+	@DELETE
+	public String excluir(String json) {
+		Gson gson = new Gson();
+		Fabricante fabricante = gson.fromJson(json, Fabricante.class);
+		
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		fabricante = fabricanteDAO.buscar(fabricante.getCodigo());//O meu fabricante vai buscar, com base do codigo dele
+		fabricanteDAO.excluir(fabricante);//Transformado em Persistente, ai posso excluir
+		
+		String jsonSaida = gson.toJson(fabricante);
+		return jsonSaida;
+	}
 }

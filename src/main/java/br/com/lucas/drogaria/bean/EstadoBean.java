@@ -30,8 +30,7 @@ import br.com.lucas.drogaria.domain.Estado;
  */
 
 @SuppressWarnings("serial")
-@ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam
-				// com a tela
+@ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam com a tela
 @ViewScoped // Tempo de tela, ficam vivos enquanto estou na tela de estado
 public class EstadoBean implements Serializable {
 	private Estado estado;

@@ -10,13 +10,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 
 import org.omnifaces.util.Messages;
 
 import com.google.gson.Gson;
 
-import br.com.lucas.drogaria.dao.FabricanteDAO;
 import br.com.lucas.drogaria.domain.Fabricante;
 
 @SuppressWarnings("serial")
@@ -67,12 +67,26 @@ public class FabricanteBean implements Serializable {
 	
 	public void salvar(RuntimeException erro) {
 		try {
-			FabricanteDAO fabricanteDAO = new FabricanteDAO();
+			/*FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricanteDAO.merge(fabricante);
 
 			fabricante = new Fabricante();
-			fabricantes = fabricanteDAO.listar();
+			fabricantes = fabricanteDAO.listar();*/
 
+			Client cliente = ClientBuilder.newClient();//Criar um cliente
+			WebTarget caminho = cliente.target("http://127.0.0.1:8081/Drogaria/rest/fabricante");//Definir String conexão com o serviço
+		
+			Gson gson = new Gson();
+			
+			String json = gson.toJson(fabricante);
+			caminho.request().post(Entity.json(json));	
+			
+			fabricante = new Fabricante();
+			
+			json = caminho.request().get(String.class);
+			Fabricante[] vetor = gson.fromJson(json, Fabricante[].class);
+			fabricantes = Arrays.asList(vetor);
+			
 			Messages.addGlobalInfo("Fabricante salvo com sucesso");
 		} catch (Exception e) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar os 'fabricantes");
@@ -87,15 +101,20 @@ public class FabricanteBean implements Serializable {
 	
 	public void excluir(ActionEvent evento) {
 		try {
-			FabricanteDAO fabricanteDAO = new FabricanteDAO();
-			
 			fabricante = (Fabricante) evento.getComponent().getAttributes().get("fabricanteSelecionado");
 
+			Client cliente = ClientBuilder.newClient();
 			
-			fabricanteDAO.merge(fabricante);
+			WebTarget caminho = cliente.target("http://127.0.0.1:8081/Drogaria/rest/fabricante");
+			WebTarget caminhoExcluir = caminho.path("{codigo}").resolveTemplate("codigo", fabricante.getCodigo());
 			
-
-			fabricantes = fabricanteDAO.listar();
+			caminhoExcluir.request().delete();
+			String json = caminho.request().get(String.class);
+			
+			Gson gson = new Gson();
+			Fabricante[] vetor = gson.fromJson(json, Fabricante[].class);
+			
+			fabricantes = Arrays.asList(vetor);
 
 			Messages.addGlobalInfo("Fabricante removido com sucesso");
 		} catch (RuntimeException erro) {

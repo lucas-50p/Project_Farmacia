@@ -34,20 +34,20 @@ public class FabricanteService {
 	//@PathParam("{codigo}"): Estou amarrando objeto código ao parametro código
 	@GET
 	@Path("{codigo}")
-	public String buscar(@PathParam("codigo") Long codigo){
+	public String buscar(@PathParam("codigo") Long codigo) {
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
 		Fabricante fabricante = fabricanteDAO.buscar(codigo);
-		
+
 		Gson gson = new Gson();
 		String json = gson.toJson(fabricante);
-		
+
 		return json;
 	}
 	//http://127.0.0.1:8081/Drogaria/rest/fabricante
 	//ERROR 500, erro de servidor tento fazer processamento ele no conseguiu
 	/*204: ele fez uma chamada 200 sem sucesso, ele chamou salvar no retornou nada
 	NO teve nenhum conteudo de retorno*/
-	//Salvar
+
 	@POST
 	public String salvar(String json) {
 		Gson gson = new Gson();
@@ -59,7 +59,7 @@ public class FabricanteService {
 		String jsonSaida = gson.toJson(fabricante);
 		return jsonSaida;
 	}
-	//Editar
+
 	@PUT
 	public String editar(String json) {
 		Gson gson = new Gson();
@@ -76,15 +76,15 @@ public class FabricanteService {
 	//Persistente: ele é um objeto que faz parte a seção do hibernate
 	//http://127.0.0.1:8081/Drogaria/rest/fabricante
 	@DELETE
-	public String excluir(String json) {
-		Gson gson = new Gson();
-		Fabricante fabricante = gson.fromJson(json, Fabricante.class);
-		
+	@Path("{codigo}")
+	public String excluir(@PathParam("codigo") Long codigo){
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
-		fabricante = fabricanteDAO.buscar(fabricante.getCodigo());//O meu fabricante vai buscar, com base do codigo dele
-		fabricanteDAO.excluir(fabricante);//Transformado em Persistente, ai posso excluir
 		
-		String jsonSaida = gson.toJson(fabricante);
-		return jsonSaida;
+		Fabricante fabricante = fabricanteDAO.buscar(codigo);
+		fabricanteDAO.excluir(fabricante);
+		
+		Gson gson = new Gson();
+		String saida = gson.toJson(fabricante);
+		return saida;
 	}
 }

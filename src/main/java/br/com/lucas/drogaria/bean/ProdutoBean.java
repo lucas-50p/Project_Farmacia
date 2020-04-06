@@ -1,6 +1,10 @@
 package br.com.lucas.drogaria.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +14,7 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.lucas.drogaria.dao.FabricanteDAO;
 import br.com.lucas.drogaria.dao.ProdutoDAO;
@@ -48,8 +53,8 @@ public class ProdutoBean implements Serializable {
 	public void setFabricantes(List<Fabricante> fabricantes) {
 		this.fabricantes = fabricantes;
 	}
-	
-	@PostConstruct// Chamar quando a tela criada
+
+	@PostConstruct // Chamar quando a tela criada
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -65,7 +70,7 @@ public class ProdutoBean implements Serializable {
 	public void novo() {
 		try {
 			produto = new Produto();
-			
+
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
 
@@ -119,12 +124,19 @@ public class ProdutoBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void upload(FileUploadEvent evento) {
-		String nome = evento.getFile().getFileName();
-		String tipo = evento.getFile().getContentType();
-		long tamanho = evento.getFile().getSize();
-		
-		Messages.addGlobalInfo("Name: " + nome + "\nTipo: " + tipo + " \nTamanho: " + tamanho);
+		try {
+			UploadedFile arquivoUpload = evento.getFile();// Arquivo original
+			Path arquivoTemp = Files.createTempFile(null, null);// 1 null: nome temporario, 2 null:Extensão/Arquivo original
+																
+			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);//REPLACE_EXISTING:Sobrepõem
+			produto.setCaminho(arquivoTemp.toString());
+			Messages.addGlobalInfo(produto.getCaminho());
+			System.out.println("Caminho: " + produto.getCaminho());
+		} catch (IOException erro) {
+			Messages.addGlobalInfo("Ocorreu um erro ao tentar realizar o upload");
+			erro.printStackTrace();
+		}
 	}
 }

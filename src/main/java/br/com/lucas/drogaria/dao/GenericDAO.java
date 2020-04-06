@@ -129,7 +129,8 @@ public class GenericDAO<Entidade> {
 		}
 	}
 	//merge: fusão
-	public void merge(Entidade entidade) {
+	@SuppressWarnings("unchecked")
+	public Entidade merge(Entidade entidade) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Transaction transacao = null;
 
@@ -137,9 +138,12 @@ public class GenericDAO<Entidade> {
 		 * Se de erro em alguma linha entra no catch finally fecha uma sessao
 		 */
 		try {
+			
+			
 			transacao = sessao.beginTransaction();
-			sessao.merge(entidade);
-			transacao.commit();// comfirma ,Termina
+			Entidade retorno = (Entidade) sessao.merge(entidade);
+			transacao.commit();// confirma ,Termina
+			return retorno;
 		} catch (RuntimeException erro) {// verifica se a transacao e diferente de nulo
 			if (transacao != null) {
 				transacao.rollback();// reversão

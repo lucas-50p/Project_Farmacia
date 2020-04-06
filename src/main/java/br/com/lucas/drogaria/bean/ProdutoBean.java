@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
@@ -95,16 +96,22 @@ public class ProdutoBean implements Serializable {
 	public void salvar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtoDAO.merge(produto);
+			Produto produtoRetorno = produtoDAO.merge(produto);
+			
+			Path origem = Paths.get(produto.getCaminho());
+			Path destino = Paths.get("C:\\ws-delfino-upload/" + produtoRetorno.getCodigo() + ".png");
+			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 
 			produto = new Produto();
+
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
 
 			produtos = produtoDAO.listar();
-			Messages.addGlobalInfo("Produto salvo com sucesso");
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o produto");
+
+			Messages.addGlobalInfo("salvo com sucesso");
+		} catch (RuntimeException | IOException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar o produto");
 			erro.printStackTrace();
 		}
 	}
@@ -131,9 +138,9 @@ public class ProdutoBean implements Serializable {
 			Path arquivoTemp = Files.createTempFile(null, null);// 1 null: nome temporario, 2 null:Extensão/Arquivo original
 																
 			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);//REPLACE_EXISTING:Sobrepõem
-			produto.setCaminho(arquivoTemp.toString());
-			Messages.addGlobalInfo(produto.getCaminho());
-			System.out.println("Caminho: " + produto.getCaminho());
+			produto.setCaminho(arquivoTemp.toString());//Origem
+			
+			Messages.addGlobalInfo("Upload realizado com sucesso!");
 		} catch (IOException erro) {
 			Messages.addGlobalInfo("Ocorreu um erro ao tentar realizar o upload");
 			erro.printStackTrace();

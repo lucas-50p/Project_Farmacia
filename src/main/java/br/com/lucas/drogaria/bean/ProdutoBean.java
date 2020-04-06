@@ -84,7 +84,8 @@ public class ProdutoBean implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
-
+			produto.setCaminho("C:\\ws-delfino-upload/" + produto.getCodigo() + ".png");
+			
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
 		} catch (RuntimeException erro) {
@@ -92,9 +93,15 @@ public class ProdutoBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-
+	
 	public void salvar() {
 		try {
+			if (produto.getCaminho() == null) {
+				Messages.addGlobalError("O campo é obrigatório");
+				return;//Se ele cai ele no faz o processo, campo foto obrigatorio
+			}
+			
+			
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			Produto produtoRetorno = produtoDAO.merge(produto);
 			
@@ -123,10 +130,13 @@ public class ProdutoBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.excluir(produto);
 
+			Path arquivo = Paths.get("C:\\ws-delfino-upload/" + produto.getCodigo() + ".png");
+			Files.deleteIfExists(arquivo);
+			
 			produtos = produtoDAO.listar();
 
 			Messages.addGlobalInfo("Produto removido com sucesso");
-		} catch (RuntimeException erro) {
+		} catch (RuntimeException | IOException erro ) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o produto");
 			erro.printStackTrace();
 		}

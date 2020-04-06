@@ -148,7 +148,7 @@ public class ProdutoBean implements Serializable {
 			Path arquivoTemp = Files.createTempFile(null, null);// 1 null: nome temporario, 2 null:Extensão/Arquivo original
 																
 			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);//REPLACE_EXISTING:Sobrepõem
-			produto.setCaminho(arquivoTemp.toString());//Origem
+			produto.setCaminho(arquivoTemp.toString());//Origem, caminho temporário
 			
 			Messages.addGlobalInfo("Upload realizado com sucesso!");
 		} catch (IOException erro) {

@@ -100,6 +100,7 @@ public class PessoaBean implements Serializable {
 		      
 		   estado = pessoa.getCidade().getEstado();
 		   
+		   Messages.addGlobalInfo("Pessoa editada salva com sucesso");
 		  }catch(RuntimeException erro) {
 		   Messages.addGlobalError("Ocorreu um erro ao tentar editar a pessoa!");
 		   erro.printStackTrace();
@@ -122,6 +123,8 @@ public class PessoaBean implements Serializable {
 			estados = estadoDAO.listar();//Recarregar as pessoas
 
 			cidades = new ArrayList<>();
+			
+			Messages.addGlobalInfo("Pessoa salva com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a pessoa");
 			erro.printStackTrace();
@@ -136,6 +139,7 @@ public class PessoaBean implements Serializable {
 			  pessoaDAO.excluir(this.pessoa);
 			  
 			  pessoas = pessoaDAO.listar();
+			  Messages.addGlobalInfo("Pessoa excluída com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar 'excluir' a pessoa");
 			erro.printStackTrace();

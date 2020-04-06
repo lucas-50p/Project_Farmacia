@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.FileUploadEvent;
 
 import br.com.lucas.drogaria.dao.FabricanteDAO;
 import br.com.lucas.drogaria.dao.ProdutoDAO;
@@ -117,5 +118,13 @@ public class ProdutoBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o produto");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void upload(FileUploadEvent evento) {
+		String nome = evento.getFile().getFileName();
+		String tipo = evento.getFile().getContentType();
+		long tamanho = evento.getFile().getSize();
+		
+		Messages.addGlobalInfo("Name: " + nome + "\nTipo: " + tipo + " \nTamanho: " + tamanho);
 	}
 }

@@ -1,6 +1,7 @@
 package br.com.lucas.drogaria.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +56,26 @@ public class VendasBean implements Serializable {
 	
 	public void adicionar(ActionEvent evento){
 		Produto produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
-
+		
+		int achou = -1;//-1 não achou
+		for (int posicao = 0; posicao < itensVenda.size(); posicao++) {
+			if (itensVenda.get(posicao).getProduto().equals(produto)) {
+				achou = posicao;
+			}
+		}
+		
+		if(achou < 0) {
 		ItemVenda itemVenda = new ItemVenda();
 		itemVenda.setPrecoParcial(produto.getPreco());
 		itemVenda.setProduto(produto);
 		itemVenda.setQuantidade(new Short("1"));
 		
 		itensVenda.add(itemVenda);
+		
+		}else {
+			ItemVenda itemVenda = itensVenda.get(achou);
+			itemVenda.setQuantidade(new Short(itemVenda.getQuantidade() + 1 + ""));//qualquer valor numerico que voçê some no java inteiro, ele manda para int 
+			itemVenda.setPrecoParcial(produto.getPreco().multiply(new BigDecimal(itemVenda.getQuantidade())));//Converter para big decimal, mutiplica a quantidade
+		}
 	}
 }

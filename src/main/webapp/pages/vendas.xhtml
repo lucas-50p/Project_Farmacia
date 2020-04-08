@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Vendas</title>
+	<title>venda</title>
 </h:head>
 <body>
 	<p:growl id="mensagem" />
@@ -15,7 +15,7 @@
 		<p:panel header="Produtos">
 			<p:dataTable id="tabelaProduto"
 				emptyMessage="Nenhum registro encontrado." paginator="true"
-				value="#{vendasBean.produtos}" var="produto" rows="3">
+				value="#{vendaBean.produtos}" var="produto" rows="3">
 
 				<p:column headerText="Descrição" filterBy="#{produto.descricao}"
 					sortBy="#{produto.descricao}">
@@ -39,7 +39,7 @@
 
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-plus"
-						actionListener="#{vendasBean.adicionar}"
+						actionListener="#{vendaBean.adicionar}"
 						update=":formulario:tabelaCesta :formulario:painelFinalizacao">
 						<f:attribute name="produtoSelecionado" value="#{produto}" />
 					</p:commandButton>
@@ -51,7 +51,7 @@
 		<p:panel header="Cesta de Compras">
 			<p:dataTable id="tabelaCesta"
 				emptyMessage="Nenhum registro encontrado." paginator="true"
-				value="#{vendasBean.itensVenda}" var="itemVenda" rows="3">
+				value="#{vendaBean.itensVenda}" var="itemVenda" rows="3">
 
 				<p:column headerText="Descrição">
 					<h:outputText value="#{itemVenda.produto.descricao}">
@@ -76,7 +76,7 @@
 
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-minus"
-						actionListener="#{vendasBean.remover}"
+						actionListener="#{vendaBean.remover}"
 						update=":formulario:tabelaCesta :formulario:painelFinalizacao">
 						<f:attribute name="itemSelecionado" value="#{itemVenda}" />
 					</p:commandButton>
@@ -84,16 +84,20 @@
 			</p:dataTable>
 		</p:panel>
 
-		<p:panel header="Finazação"></p:panel>
-		<h:panelGrid id="painelFinalizacao" columns="3">
-			<p:outputLabel value="Total: R$" />
-			<h:outputText value="#{vendasBean.venda.precoTotal}">
-				<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-			</h:outputText>
-			<p:commandButton value="Finalizar" actionListener="#{vendasBean.finalizar}"
-				update=":mensagem :formularioFinalizar:painelFinalizar"
-				oncomplete="PF('dialogo').show();"/>
-		</h:panelGrid>
+		
+		
+		<p:panel header="Finalização">
+			<h:panelGrid id="painelFinalizacao" columns="3">
+				<p:outputLabel value="Total: R$" />
+				<h:outputText value="#{vendaBean.venda.precoTotal}">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+				</h:outputText>
+				<p:commandButton value="Finalizar"
+					actionListener="#{vendaBean.finalizar}"
+					update=":mensagem :formularioFinalizar:painelFinalizar"
+					oncomplete="PF('dialogo').show();" />
+			</h:panelGrid>
+			</p:panel>
 	</h:form>
 
 	<p:dialog header="Finalizar Venda" widgetVar="dialogo"
@@ -101,13 +105,25 @@
 		<h:form id="formularioFinalizar">
 			<h:panelGrid id="painelFinalizar" columns="2">
 			<p:outputLabel value="Funcionário:"/>
-			<p:selectOneMenu value="#{vendasBean.venda.funcionario}"
-			converter="omnifaces.SelectItemsConverter" filter="true">
+			<p:selectOneMenu value="#{vendaBean.venda.funcionario}"
+			converter="omnifaces.SelectItemsConverter" filter="true" 
+			filterMatchMode="contains">
 				<f:selectItem noSelectionOption="true"
 				itemLabel="Selecione um funcionario"/>
-				<f:selectItems value="#{vendasBean.funcionarios}" var="funcionario"
-					itemValue="#{funcionario}" itemLabel="#{funcionario.pessoa.nome}"/>
+				<f:selectItems value="#{vendaBean.funcionarios}" var="funcionario"
+					itemValue="#{funcionario}" itemLabel="#{funcionario.pessoa.cpf} - #{funcionario.pessoa.nome}"/>
 			</p:selectOneMenu>
+			
+			<p:outputLabel value="Cliente:" />
+				<p:selectOneMenu value="#{vendaBean.venda.cliente}"
+					converter="omnifaces.SelectItemsConverter" filter="true"
+					filterMatchMode="contains">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um cliente" />
+					<f:selectItems value="#{vendaBean.clientes}" var="cliente"
+						itemValue="#{cliente}"
+						itemLabel="#{cliente.pessoa.cpf} - #{cliente.pessoa.nome}" />
+				</p:selectOneMenu>
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">

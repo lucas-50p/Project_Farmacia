@@ -12,6 +12,7 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
+import br.com.lucas.drogaria.dao.ClienteDAO;
 import br.com.lucas.drogaria.dao.FuncionarioDAO;
 import br.com.lucas.drogaria.dao.ProdutoDAO;
 import br.com.lucas.drogaria.domain.Cliente;
@@ -23,7 +24,7 @@ import br.com.lucas.drogaria.domain.Venda;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class VendasBean implements Serializable {
+public class VendaBean implements Serializable {
 	private Venda venda;
 
 	private List<Produto> produtos;
@@ -142,13 +143,15 @@ public class VendasBean implements Serializable {
 		}
 	}
 	
-	public void finalizar() {
-		try {
+	public void finalizar(){
+		try{
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-			funcionarios = funcionarioDAO.listar();
-
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar finalizar");
+			funcionarios = funcionarioDAO.listarOrdenado();
+			
+			ClienteDAO clienteDAO = new ClienteDAO();
+			clientes = clienteDAO.listarOrdenado();
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Ocorreu um erro ao tentar finalizar a venda");
 			erro.printStackTrace();
 		}
 	}

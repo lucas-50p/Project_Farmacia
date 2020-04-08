@@ -9,13 +9,13 @@
 	<title>Vendas</title>
 </h:head>
 <body>
-	<p:growl id="mensagem"/>
+	<p:growl id="mensagem" />
 
 	<h:form id="formulario">
 		<p:panel header="Produtos">
-			<p:dataTable id="tabelaProduto" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{vendasBean.produtos}" var="produto"
-				rows="3">
+			<p:dataTable id="tabelaProduto"
+				emptyMessage="Nenhum registro encontrado." paginator="true"
+				value="#{vendasBean.produtos}" var="produto" rows="3">
 
 				<p:column headerText="Descrição" filterBy="#{produto.descricao}"
 					sortBy="#{produto.descricao}">
@@ -38,7 +38,8 @@
 				</p:column>
 
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-plus" actionListener="#{vendasBean.adicionar}"
+					<p:commandButton icon="ui-icon-plus"
+						actionListener="#{vendasBean.adicionar}"
 						update=":formulario:tabelaCesta">
 						<f:attribute name="produtoSelecionado" value="#{produto}" />
 					</p:commandButton>
@@ -46,17 +47,17 @@
 			</p:dataTable>
 		</p:panel>
 
-		
+
 		<p:panel header="Cesta de Compras">
-			<p:dataTable id="tabelaCesta" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{vendasBean.itensVenda}" var="itemVenda"
-				rows="3">
+			<p:dataTable id="tabelaCesta"
+				emptyMessage="Nenhum registro encontrado." paginator="true"
+				value="#{vendasBean.itensVenda}" var="itemVenda" rows="3">
 
 				<p:column headerText="Descrição">
 					<h:outputText value="#{itemVenda.produto.descricao}">
 					</h:outputText>
 				</p:column>
-				
+
 				<p:column headerText="Preço Un.">
 					<h:outputText value="#{itemVenda.produto.preco}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
@@ -66,7 +67,7 @@
 				<p:column headerText="Qtde.">
 					<h:outputText value="#{itemVenda.quantidade}" />
 				</p:column>
-				
+
 				<p:column headerText="Preço Parcial">
 					<h:outputText value="#{itemVenda.precoParcial}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
@@ -74,7 +75,11 @@
 				</p:column>
 
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-minus" />
+					<p:commandButton icon="ui-icon-minus"
+						actionListener="#{vendasBean.remover}" 
+						update=":formulario:tabelaCesta">
+					<f:attribute name="itemSelecionado" value="#{itemVenda}" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 		</p:panel>

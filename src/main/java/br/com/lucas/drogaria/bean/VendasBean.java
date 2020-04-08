@@ -78,4 +78,20 @@ public class VendasBean implements Serializable {
 			itemVenda.setPrecoParcial(produto.getPreco().multiply(new BigDecimal(itemVenda.getQuantidade())));//Converter para big decimal, mutiplica a quantidade
 		}
 	}
+	
+	public void remover(ActionEvent evento) {
+		ItemVenda itemVenda = (ItemVenda )evento.getComponent().getAttributes().get("itemSelecionado");
+		
+		int achou = -1;
+		for (int posicao = 0; posicao < itensVenda.size(); posicao++) {
+			if (itensVenda.get(posicao).getProduto().equals(itemVenda.getProduto())) {
+				achou = posicao;
+			}
+		}
+		
+		if (achou > -1) {
+			itensVenda.remove(achou);
+		}
+		
+	}
 }

@@ -72,6 +72,10 @@ public class CidadeBean implements Serializable {
 		}
 	}
 	
+	/**
+	 * Metodo responsavel por salvar cidade
+	 * @author Lucas Bueno
+	 */
 	public void salvar() {//Server para incluir e salvar
 		try {
 			CidadeDAO cidadeDAO = new CidadeDAO();

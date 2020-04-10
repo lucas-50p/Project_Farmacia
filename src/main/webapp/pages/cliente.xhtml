@@ -50,13 +50,14 @@
 				</p:column>
 
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash"
+					<p:commandButton id="btnExcluir" icon="ui-icon-trash"
 						actionListener="#{clienteBean.excluir}"
 						update=":mensagem :formListagem:tabela">
 						<p:confirm header="Confirmação"
 							message="Deseja excluir a cliente?" icon="ui-icon-alert" />
 						<f:attribute name="clienteSelecionado" value="#{cliente}" />
 					</p:commandButton>
+					<p:tooltip for="btnExcluir" value="Utilize este botão para realizar a exclusão do cliente!"/>
 				</p:column>
 			</p:dataTable>
 

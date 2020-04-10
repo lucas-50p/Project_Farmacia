@@ -3,6 +3,7 @@ package br.com.lucas.drogaria.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -145,6 +146,8 @@ public class VendaBean implements Serializable {
 	
 	public void finalizar(){
 		try{
+			venda.setHorario(new Date());
+			
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 			funcionarios = funcionarioDAO.listarOrdenado();
 			

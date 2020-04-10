@@ -110,7 +110,11 @@ public class CidadeBean implements Serializable {
 			erro.printStackTrace();// Pilha de execução
 		}
 	}
-	
+
+	/**
+	 * Metodo responsavel por editar cidade
+	 * @author Lucas Bueno
+	 */
 	public void editar(ActionEvent evento) {
 		try {
 			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");

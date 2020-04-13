@@ -16,6 +16,7 @@ import org.omnifaces.util.Messages;
 import br.com.lucas.drogaria.dao.ClienteDAO;
 import br.com.lucas.drogaria.dao.FuncionarioDAO;
 import br.com.lucas.drogaria.dao.ProdutoDAO;
+import br.com.lucas.drogaria.dao.VendaDAO;
 import br.com.lucas.drogaria.domain.Cliente;
 import br.com.lucas.drogaria.domain.Funcionario;
 import br.com.lucas.drogaria.domain.ItemVenda;
@@ -155,6 +156,23 @@ public class VendaBean implements Serializable {
 			clientes = clienteDAO.listarOrdenado();
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao tentar finalizar a venda");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void salvar() {
+		try {
+			if (venda.getPrecoTotal().signum() == 0) {
+				Messages.addGlobalError("Informe pelo menos um item para venda");
+				return;
+			}
+			
+			VendaDAO vendaDAO = new VendaDAO();
+			vendaDAO.salvar(venda, itensVenda);
+			
+			Messages.addGlobalInfo("Venda realizada com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a venda");
 			erro.printStackTrace();
 		}
 	}

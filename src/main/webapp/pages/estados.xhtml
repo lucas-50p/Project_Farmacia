@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Estados</title>
-</h:head>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-<h:body>
-	<p:growl id="mensagem" />
+	<ui:define name="conteudo">
+	
+		<h:form id="formListagem">
+			<p:panel header="Estado - Listagem">
 
-
-	<h:form id="formListagem">
-		<p:panel header="Estado - Listagem">
-
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
-				paginator="true" value="#{estadoBean.estados}" var="estado" rows="5">
-			/*sortyBy: ordenar
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					paginator="true" value="#{estadoBean.estados}" var="estado"
+					rows="5" paginatorPosition="bottom">
+			/*
+			ui:composition:baseada em uma composição, baseada em um template
+			ui:define: ele juntar com ui:insert, ele procurar o conteúdo
+			sortyBy: ordenar
 			filterBy: fazer pesquisa
 			value="#{estadoBean.estados}: é para vincular um componente da visão com atributo do modelo*/
 			
 			<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{estadoBean.novo}" update=":formCadastro:painel" />
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{estadoBean.novo}" update=":formCadastro:painel" />
 
-				</f:facet>
+					</f:facet>
 
-				<p:column headerText="Nome" sortBy="#{estado.nome}"
-					filterBy="#{estado.nome}">
-					<h:outputText value="#{estado.nome}" />
-				</p:column>
+					<p:column headerText="Nome" sortBy="#{estado.nome}"
+						filterBy="#{estado.nome}">
+						<h:outputText value="#{estado.nome}" />
+					</p:column>
 
-				<p:column headerText="Sigla" sortBy="#{estado.sigla}"
-					filterBy="#{estado.sigla}">
-					<h:outputText value="#{estado.sigla}" />
-				</p:column>
+					<p:column headerText="Sigla" sortBy="#{estado.sigla}"
+						filterBy="#{estado.sigla}">
+						<h:outputText value="#{estado.sigla}" />
+					</p:column>
 
-				<!-- value:o curso do var estado -->
-				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{estadoBean.excluir}"
-						update=":mensagem :formListagem:tabela">
-						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
-							icon="ui-icon-alert" />
-						<f:attribute name="estadoSelecionado" value="#{estado}" />
-					</p:commandButton>
-					
-					<!-- EDITAR -->
-					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{estadoBean.editar}"
-						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-						<f:attribute name="estadoSelecionado" value="#{estado}" />
-					</p:commandButton>
+					<!-- value:o curso do var estado -->
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{estadoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o estado?" icon="ui-icon-alert" />
+							<f:attribute name="estadoSelecionado" value="#{estado}" />
+						</p:commandButton>
 
-				</p:column>
+						<!-- EDITAR -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{estadoBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="estadoSelecionado" value="#{estado}" />
+						</p:commandButton>
 
-			</p:dataTable>
+					</p:column>
 
-			<!--global(true):qualquer ação que apareça de comfirmação essa janela vai ser chamada
+				</p:dataTable>
+
+				<!--global(true):qualquer ação que apareça de comfirmação essa janela vai ser chamada
 			type="button": coloca para ele não fazer outro submit
 			styleClass: propriedade do sim ou no-->
-			<p:confirmDialog global="true">
-				<p:commandButton value="Sim" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="Não" type="button"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
 
 
-		</p:panel>
-	</h:form>
+			</p:panel>
+		</h:form>
 
-	<!-- Draggable: não arrastar tela(false)
+		<!-- Draggable: não arrastar tela(false)
  resizable: redimensionar a tela (false)
  modal: não click na tela de traz quando tem uma aberta(true)
  p:outputLabel: É um rotulo, uma menssagem
@@ -85,30 +86,32 @@
  closable="false": usado para pode fechar só um lado 
  rows="5": quantas linhas na pag-->
 
-	<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true" closable="false">
+		<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false">
 
-		<h:form id="formCadastro">
-			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel value="Nome: " />
-				<p:inputText maxlength="50" size="30"
-					value="#{estadoBean.estado.nome}" />
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Nome: " />
+					<p:inputText maxlength="50" size="30"
+						value="#{estadoBean.estado.nome}" />
 
-				<p:outputLabel value="Sigla: " />
-				<p:inputText maxlength="2" size="10"
-					value="#{estadoBean.estado.sigla}" />
-			</h:panelGrid>
+					<p:outputLabel value="Sigla: " />
+					<p:inputText maxlength="2" size="10"
+						value="#{estadoBean.estado.sigla}" />
+				</h:panelGrid>
 
-			<!--acactionListener: chamar algum contole Bean  -->
-			<!-- SALVAR -->
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar"
-					actionListener="#{estadoBean.salvar}"
-					update=":mensagem :formCadastro:painel :formListagem:tabela" />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
-			</h:panelGrid>
+				<!--acactionListener: chamar algum contole Bean  -->
+				<!-- SALVAR -->
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{estadoBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
 
-		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+
+</ui:composition>

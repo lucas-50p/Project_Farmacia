@@ -15,12 +15,15 @@
 					paginator="true" value="#{produtoBean.produtos}" var="produto"
 					rows="5" paginatorPosition="bottom">
 					<f:facet name="footer">
-						<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
+						<p:commandButton icon="ui-icon-plus" actionListener="#{produtoBean.novo}"
 							oncomplete="PF('dialogo').show();"
 							update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
+						
+						<p:commandButton icon="ui-icon-print" actionListener="#{produtoBean.imprimir}"/>
+						
 					</f:facet>
 					<!-- Locale: convert o ponto para virgula
 				minFractionDigits: quantos numeros depois da virgula -->

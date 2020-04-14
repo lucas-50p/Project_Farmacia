@@ -6,13 +6,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.hibernate.Hibernate;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -21,6 +26,9 @@ import br.com.lucas.drogaria.dao.FabricanteDAO;
 import br.com.lucas.drogaria.dao.ProdutoDAO;
 import br.com.lucas.drogaria.domain.Fabricante;
 import br.com.lucas.drogaria.domain.Produto;
+import br.com.lucas.drogaria.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -153,6 +161,24 @@ public class ProdutoBean implements Serializable {
 			Messages.addGlobalInfo("Upload realizado com sucesso!");
 		} catch (IOException erro) {
 			Messages.addGlobalInfo("Ocorreu um erro ao tentar realizar o upload");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void imprimir() {
+	
+		try {
+			String caminho = Faces.getRealPath("/reports/produtos.jasper");
+			
+			//Map: É uma estrutura de dados que guarda, eu guardo um nome e um value
+			//HashMap:É uma estrutura de dados de mapa, onde tenho o nome e value
+			Map<String, Object> parametros = new HashMap<>();
+			//Eu preciso converter session e um connection no Hibernate Util
+			
+			Connection conexao = HibernateUtil.getConnection();
+			JasperFillManager.fillReport(caminho, parametros, conexao);
+		} catch (JRException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatorio!");
 			erro.printStackTrace();
 		}
 	}

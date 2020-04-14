@@ -24,24 +24,77 @@ ORDER BY drogaria.estado.nome ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="151" splitType="Stretch">
+			<image>
+				<reportElement x="10" y="0" width="535" height="110" uuid="068f77de-e0ab-4f13-9837-e2b7b86d08d1"/>
+				<imageExpression><![CDATA["/src/main/webapp/resources/images/banner3.jpg"]]></imageExpression>
+			</image>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-20" width="560" height="30" uuid="e6a2ece0-e41e-4828-b479-956bb02d8e6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Franklin Gothic Book" size="24" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Relatório de Estados]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="6443cf85-2916-4840-ac65-44c0d53950ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aab780cb-068f-4531-bc8d-80f39a54c34d"/>
+				</reportElement>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="0" width="100" height="30" uuid="6ae765cd-1dca-4284-afab-9bb00cebcb1d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd4144c0-77f8-4cbb-b09d-80832c14e464"/>
+				</reportElement>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sigla]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="999b384e-5c96-4dcd-a588-6d9f197f3d67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aab780cb-068f-4531-bc8d-80f39a54c34d"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="11" width="100" height="30" uuid="6407f3c3-a2bf-4ed0-970b-8c7478dd1fc9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd4144c0-77f8-4cbb-b09d-80832c14e464"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="560" height="30" uuid="a591cba8-f1fb-4fac-bfbe-024d77f0e346"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Av. Brigadeiro Luis Antonio, Bela Vista, CEP 01317-000, São Paulo - SP]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

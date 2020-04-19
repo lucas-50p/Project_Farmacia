@@ -16,7 +16,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.hibernate.Hibernate;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -29,6 +28,8 @@ import br.com.lucas.drogaria.domain.Produto;
 import br.com.lucas.drogaria.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -169,14 +170,21 @@ public class ProdutoBean implements Serializable {
 	
 		try {
 			String caminho = Faces.getRealPath("/reports/produtos.jasper");
-			
+		
 			//Map: É uma estrutura de dados que guarda, eu guardo um nome e um value
 			//HashMap:É uma estrutura de dados de mapa, onde tenho o nome e value
 			Map<String, Object> parametros = new HashMap<>();
 			//Eu preciso converter session e um connection no Hibernate Util
 			
-			Connection conexao = HibernateUtil.getConnection();
-			JasperFillManager.fillReport(caminho, parametros, conexao);
+			parametros.put("PRODUTO_DESCRICAO", new Object());
+			
+			Connection conexao = HibernateUtil.getConexao();
+			
+			//JasperPrint:Usa para imprimir o relatorio
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			//JasperPrintManager: para dar impressão
+			JasperPrintManager.printReport(relatorio, true);
+			
 		} catch (JRException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatorio!");
 			erro.printStackTrace();

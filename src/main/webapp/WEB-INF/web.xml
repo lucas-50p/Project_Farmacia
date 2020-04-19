@@ -5,6 +5,11 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 	<!-- Nome da Aplicação -->
 	<display-name>Drogaria</display-name>
+	
+	<!-- Página Principal -->
+	<welcome-file-list>
+		<welcome-file>pages/principal.xhtml</welcome-file>
+	</welcome-file-list>
 
 	<!-- Estágio do Projeto -->
 	<context-param>

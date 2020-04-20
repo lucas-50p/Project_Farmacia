@@ -35,12 +35,17 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<!-- Coloca "update" for add atributo no Domain: primeiro crio ele poder se nulo 'nullable = false' para 'nullable = true', 
-		no banco de dados preenche esses campos, depois de preencher os campos volto, ele para no null.
-		'nullable = false' para ser obrigado a informa a cidade
-		Ver no Banco de Dados: se precisar alterar click caixa nullable depois voltar para validate -->
-		<!-- validate: ele compara o que tem no java e no banco;;(validate);; create: quando for alterar domain-->
-		<property name="hbm2ddl.auto">validate</property>
+		<!-- Coloca "update" for add atributo no Domain: primeiro crio ele poder 
+			se nulo 'nullable = false' para 'nullable = true', no banco de dados preenche 
+			esses campos, depois de preencher os campos volto, ele para no null. 'nullable 
+			= false' para ser obrigado a informa a cidade Ver no Banco de Dados: se precisar 
+			alterar click caixa nullable depois voltar para validate -->
+		<!-- validate: ele compara o que tem no java e no banco;;(validate);; create: 
+			quando for alterar domain
+			validate:ele verifica o banco -->
+
+		<!-- Cria as tabelas do banco de dados-->
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Mapeamento das Entidades -->
 		<mapping class="br.com.lucas.drogaria.domain.Cidade" />
@@ -53,8 +58,7 @@
 		<mapping class="br.com.lucas.drogaria.domain.Usuario" />
 		<mapping class="br.com.lucas.drogaria.domain.Venda" />
 		<mapping class="br.com.lucas.drogaria.domain.ItemVenda" />
-
-
+		<mapping class="br.com.lucas.drogaria.domain.Historico" />
 
 	</session-factory>
 

@@ -18,6 +18,12 @@ import br.com.lucas.drogaria.domain.Usuario;
 @ManagedBean
 @ViewScoped
 public class UsuarioBean implements Serializable{
+	
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
 private Usuario usuario;
 	
 	private List<Pessoa> pessoas;

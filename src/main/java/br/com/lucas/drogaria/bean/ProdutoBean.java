@@ -35,6 +35,12 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 @ManagedBean
 @ViewScoped
 public class ProdutoBean implements Serializable {
+	
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
 
 	private Produto produto;
 	private List<Produto> produtos;

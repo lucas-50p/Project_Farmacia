@@ -23,6 +23,12 @@ import br.com.lucas.drogaria.domain.Fabricante;
 @ManagedBean // tratar do controle e do modelo dentro da nossa aplicação,Dados que conversam
 @ViewScoped // Tempo de tela, ficam vivos enquanto estou na tela de fabricante
 public class FabricanteBean implements Serializable {
+	
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
 
 	private Fabricante fabricante;
 	private List<Fabricante> fabricantes;

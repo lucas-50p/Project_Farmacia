@@ -27,6 +27,12 @@ import br.com.lucas.drogaria.domain.Venda;
 @ManagedBean
 @ViewScoped
 public class VendaBean implements Serializable {
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
+	
 	private Venda venda;
 
 	private List<Produto> produtos;

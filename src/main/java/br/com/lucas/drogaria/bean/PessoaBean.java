@@ -22,6 +22,13 @@ import br.com.lucas.drogaria.domain.Pessoa;
 @ManagedBean
 @ViewScoped
 public class PessoaBean implements Serializable {
+	
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
+	
 	private Pessoa pessoa;//A cidade está dentro da pessoa
 	private List<Pessoa> pessoas;
 	

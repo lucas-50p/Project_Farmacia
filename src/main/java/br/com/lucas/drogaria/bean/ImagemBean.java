@@ -17,6 +17,12 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped//Imagem vai ser recarregada a cada click
 public class ImagemBean {
 	
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
+	
 	@ManagedProperty("#{param.caminho}")//Conexão com produto.xhtml, o paramentro do caminho
 	private String caminho;
 	private StreamedContent foto;

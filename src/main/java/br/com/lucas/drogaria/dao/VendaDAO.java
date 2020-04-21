@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import br.com.lucas.drogaria.domain.ItemVenda;
+import br.com.lucas.drogaria.domain.Produto;
 import br.com.lucas.drogaria.domain.Venda;
 import br.com.lucas.drogaria.util.HibernateUtil;
 
@@ -26,13 +27,23 @@ public class VendaDAO extends GenericDAO<Venda> {
 				ItemVenda itemVenda = itensVenda.get(posicao);
 				itemVenda.setVenda(venda);
 				
-				sessao.save(itemVenda);
+				sessao.save(itemVenda);//Salvo
+				
+				//Variavel quantidade, está no produto(qtd Estoque) e item venda(qtd Vendida)
+				//(produto.getQuantidade() - itemVenda.getQuantidade()) : Está sendo inteiro
+				//(produto.getQuantidade() - itemVenda.getQuantidade():Primeiro ele subtrai
+				//+ "": Depois ele converte para String
+				//new Short: Por fim ele cria um Short
+				Produto produto = itemVenda.getProduto();
+				produto.setQuantidade(new Short((produto.getQuantidade() - itemVenda.getQuantidade()) + ""));
+			
+				sessao.update(produto);//Atualizo
 			}
 			
-			transacao.commit();// confireturn retorno;
+			transacao.commit();// config return retorno;
 		} catch (RuntimeException erro) {// verifica se a transacao e diferente de nulo
 			if (transacao != null) {
-				transacao.rollback();// reversão
+				transacao.rollback();// reversão, ele vai  desfazer updates em cima do produto, desfazer insert da itemVenda
 			}
 			throw erro;// error message
 		} finally {

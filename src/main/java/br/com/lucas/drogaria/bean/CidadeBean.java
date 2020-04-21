@@ -19,6 +19,12 @@ import br.com.lucas.drogaria.domain.Estado;
 @ManagedBean
 @ViewScoped
 public class CidadeBean implements Serializable {
+	
+	/*
+	 * Classe Bean Uma classe que contenha todos os atributos privados Possua
+	 * getters e setters para seus atributos Usada para encapsular e abstrair uma
+	 * entidade Implementa java.io.Serializable
+	 */
 	private Cidade cidade;
 	private List<Cidade> cidades;
 	private List<Estado> estados;

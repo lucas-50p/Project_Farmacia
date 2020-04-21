@@ -8,11 +8,11 @@
 	template="/templates/modelo.xhtml">
 
 
-	<p:growl id="mensagem" />
 
 	<ui:define name="conteudo">
 
-	<!-- validateLongRange: o valor min e max do produtos -->
+		<!-- validateLongRange: o valor min e max do produtos 
+		process="@this :formulario:codigo": Ele está ignorando os outros "required"-->
 		<h:form id="formulario">
 			<p:panel header="Historico">
 				<h:panelGrid columns="3">
@@ -22,11 +22,12 @@
 						converterMessage="o valor infomado no campo Código é invalido"
 						validatorMessage="Informe um valor entre 1 e 999999999999"
 						value="#{historicoBean.produto.codigo}">
-						<f:validateLongRange minimum="1" maximum="999999999999"/>
-						</p:inputText>
+						<f:validateLongRange minimum="1" maximum="999999999999" />
+					</p:inputText>
 					<p:commandButton icon="ui-icon-search"
 						update=":mensagem :formulario:painelDados"
-						actionListener="#{historicoBean.buscar}" />
+						actionListener="#{historicoBean.buscar}"
+						process="@this :formulario:codigo" />
 				</h:panelGrid>
 
 				<!-- panelGroup: Componente de marcação, marca o começo e o fim; ele gera spam ou div -->
@@ -46,11 +47,27 @@
 						<h:outputText value="#{historicoBean.produto.quantidade}"></h:outputText>
 
 						<p:outputLabel value="Fabricante: "></p:outputLabel>
-						<h:outputText value="#{historicoBean.produto.fabricante.descricao}"></h:outputText>
+						<h:outputText
+							value="#{historicoBean.produto.fabricante.descricao}"></h:outputText>
+
+						<p:outputLabel for="observacoes" value="Observações:" />
+						<p:inputTextarea id="observacoes" required="true"
+							requiredMessage="O campo Observações é obrigatório" rows="5"
+							cols="50" autoResize="false"
+							value="#{historicoBean.historico.observacoes}" />
+
+						<h:panelGrid columns="1"
+							rendered="#{historicoBean.exibiPainelDados}">
+							<p:commandButton value="Salvar"
+								actionListener="#{historicoBean.salvar}" update=":mensagem" />
+						</h:panelGrid>
+
 					</h:panelGrid>
+
 				</h:panelGroup>
 
 			</p:panel>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -44,8 +44,8 @@
 			quando for alterar domain
 			validate:ele verifica o banco -->
 
-		<!-- Cria as tabelas do banco de dados-->
-		<property name="hbm2ddl.auto">validate</property>
+		<!-- Cria as tabelas do banco de dados - update -->
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Mapeamento das Entidades -->
 		<mapping class="br.com.lucas.drogaria.domain.Cidade" />
@@ -59,7 +59,9 @@
 		<mapping class="br.com.lucas.drogaria.domain.Venda" />
 		<mapping class="br.com.lucas.drogaria.domain.ItemVenda" />
 		<mapping class="br.com.lucas.drogaria.domain.Historico" />
-
+		<mapping class="br.com.lucas.drogaria.domain.Caixa" />
+		<mapping class="br.com.lucas.drogaria.domain.Movimentacao" />
+	
 	</session-factory>
 
 </hibernate-configuration>

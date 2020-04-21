@@ -35,9 +35,15 @@ public class VendaDAO extends GenericDAO<Venda> {
 				//+ "": Depois ele converte para String
 				//new Short: Por fim ele cria um Short
 				Produto produto = itemVenda.getProduto();
-				produto.setQuantidade(new Short((produto.getQuantidade() - itemVenda.getQuantidade()) + ""));
+				int quantidade = produto.getQuantidade() - itemVenda.getQuantidade();
+				
+				if (quantidade >= 0) {
+					produto.setQuantidade(new Short(quantidade + ""));
+					sessao.update(produto);//Atualizo
+				} else {
+					throw new RuntimeException("Quantidade insuficiente em estoque");//throw new cai no else,vai ver se tem catch no RunTime; catch vai ser capturado catch VendaBean
+				}
 			
-				sessao.update(produto);//Atualizo
 			}
 			
 			transacao.commit();// config return retorno;

@@ -12,6 +12,9 @@ public class Usuario extends GenericDomain {
 	@Column(length = 32, nullable = false)
 	private String senha;
 	
+	@Transient
+	private String senhaSemCriptografia;
+	
 	@Column(nullable = false)
 	private Character tipo;
 	

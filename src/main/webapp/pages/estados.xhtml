@@ -84,7 +84,8 @@
  columns: corta em 1 e 2 ...
  hide: oculta tela
  closable="false": usado para pode fechar só um lado 
- rows="5": quantas linhas na pag-->
+ rows="5": quantas linhas na pag
+ <p:ajax event="blur": quando componente perde o foco ai eu faço conversão, click na tela ele ativa a conversão-->
 
 		<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false">
@@ -92,12 +93,16 @@
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Nome: " />
-					<p:inputText maxlength="50" size="30"
-						value="#{estadoBean.estado.nome}" />
+					<p:inputText id="nome" maxlength="50" size="30"
+						value="#{estadoBean.estado.nome}" converter="upperCaseConvert">
+						<p:ajax event="blur" update=":formCadastro:nome"/>
+						</p:inputText>
 
 					<p:outputLabel value="Sigla: " />
 					<p:inputText maxlength="2" size="10"
-						value="#{estadoBean.estado.sigla}" />
+						value="#{estadoBean.estado.sigla}" converter="upperCaseConvert">
+						<p:ajax event="blur" update="@this"/>
+						</p:inputText>
 				</h:panelGrid>
 
 				<!--acactionListener: chamar algum contole Bean  -->

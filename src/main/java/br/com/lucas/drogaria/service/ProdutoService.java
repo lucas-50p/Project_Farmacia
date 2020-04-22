@@ -27,6 +27,7 @@ public class ProdutoService {
 	}
 	
 	//http://127.0.0.1:8081/Drogaria/rest/produto
+	//Meger: return salvo pelo return; save :faz por referencia no precisar dar return
 	@POST
 	public String salvar (String json) {
 		Gson gson = new Gson();

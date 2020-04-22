@@ -74,7 +74,7 @@ public class FabricanteService {
 	
 	//Transiente: ele é um objeto que não faz parte da seção do hibernate
 	//Persistente: ele é um objeto que faz parte a seção do hibernate
-	//http://127.0.0.1:8081/Drogaria/rest/fabricante
+	//http://127.0.0.1:8081/Drogaria/rest/fabricante/{codigo}
 	@DELETE
 	@Path("{codigo}")
 	public String excluir(@PathParam("codigo") Long codigo){

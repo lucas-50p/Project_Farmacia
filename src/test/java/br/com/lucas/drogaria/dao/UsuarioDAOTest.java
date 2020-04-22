@@ -26,7 +26,7 @@ public class UsuarioDAOTest {
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());//Nome do algoritmo
 		usuario.setSenha(hash.toHex());//Vai Criptografa toHex gerar:(https://www.md5hashgenerator.com/)
 		
-		usuario.setTipo('G');//Tipo 'A' administrador
+		usuario.setTipo('B');//Tipo 'A' administrador
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);

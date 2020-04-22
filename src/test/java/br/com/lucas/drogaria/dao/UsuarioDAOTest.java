@@ -1,6 +1,7 @@
 package br.com.lucas.drogaria.dao;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.lucas.drogaria.domain.Pessoa;
@@ -9,9 +10,10 @@ import br.com.lucas.drogaria.domain.Usuario;
 public class UsuarioDAOTest {
 	
 	@Test
+	@Ignore
 	public void salvar(){
 		PessoaDAO pessoaDAO = new PessoaDAO();
-		Pessoa pessoa = pessoaDAO.buscar(49L);
+		Pessoa pessoa = pessoaDAO.buscar(2L);
 		
 		System.out.println("Pessoa Encontrada");
 		System.out.println("Nome: " + pessoa.getNome());
@@ -26,11 +28,22 @@ public class UsuarioDAOTest {
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());//Nome do algoritmo
 		usuario.setSenha(hash.toHex());//Vai Criptografa toHex gerar:(https://www.md5hashgenerator.com/)
 		
-		usuario.setTipo('B');//Tipo 'A' administrador
+		usuario.setTipo('G');//Tipo 'A' administrador
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);
 		
 		System.out.println("Usuário salvo com sucesso.");
+	}
+	
+	@Test
+	public void autenticar() {
+		String cpf= "411.113.121-31";
+		String senha = "q1w2e3r4";
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.autenticar(cpf, senha);
+		
+		System.out.println("Usuário autenticar: " + usuario);
 	}
 }

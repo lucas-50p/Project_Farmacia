@@ -40,7 +40,9 @@
 					</p:inputText>
 
 					<p:outputLabel value="Valor da Abertura" />
-					<p:inputText value="#{caixaBean.caixa.valorAbertura}" />
+					<p:inputText value="#{caixaBean.caixa.valorAbertura}">
+						<f:convertNumber locale="pt_BR"/>
+					</p:inputText>
 
 					<p:outputLabel value="Funcionario" />
 					<p:selectOneMenu value="#{caixaBean.caixa.funcionario}"
@@ -52,7 +54,8 @@
 					</p:selectOneMenu>
 
 					<h:panelGrid columns="1">
-						<p:commandButton value="Salvar" oncomplete="PF('dialogo').hide();" />
+						<p:commandButton value="Salvar" oncomplete="PF('dialogo').hide();" 
+							actionListener="#{caixaBean.salvar}" update=":mensagem"/>
 					</h:panelGrid>
 
 

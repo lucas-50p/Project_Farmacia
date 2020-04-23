@@ -11,6 +11,7 @@
 		<f:viewAction action="#{produtoListagemBean.listar}"/>
 	</f:metadata>
 	
+	<p:growl id="mensagem" />
 
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -50,11 +51,10 @@
 					</p:column>
 
 					<p:column headerText="Opções">
-						<!-- EXCLUIR -->
 						<p:commandButton icon="ui-icon-trash" />
-
-						<!-- EDITAR -->
-						<p:commandButton icon="ui-icon-pencil" />
+						<p:button icon="ui-icon-pencil" outcome="/pages/produtosEdicao.xhtml">
+						<f:param name="codigo" value="#{produto.codigo}"/>
+						</p:button>
 					</p:column>
 				</p:dataTable>
 

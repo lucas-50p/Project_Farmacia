@@ -16,8 +16,10 @@
 		https://www.primefaces.org/showcase/ui/data/schedule/basic.xhtml-->
 		<h:form>
 			<p:schedule value="#{caixaBean.caixas}">
-				<p:ajax event="dateSelect" oncomplete="PF('dialogo').show();"/>
-				<p:ajax event="eventMove" oncomplete="PF('dialogo').show();"/>
+				<p:ajax event="dateSelect" listener="#{caixaBean.novo}"
+					oncomplete="PF('dialogo').show();"
+					update=":formularioCadastro:painel" />
+				<p:ajax event="eventMove" oncomplete="PF('dialogo').show();" />
 			</p:schedule>
 		</h:form>
 
@@ -29,19 +31,24 @@
 		visible="true":Ele já abre quando voçê roda
 		oncomplete="PF('dialogo').hide();: Força fechar-->
 		<p:dialog header="Caixa" closable="true" draggable="false"
-			modal="false" resizable="false" widgetVar="dialogo">
-			<h:form>
-				<h:panelGrid>
+			modal="true" resizable="false" widgetVar="dialogo">
+			<h:form id="formularioCadastro">
+				<h:panelGrid id="painel">
 					<p:outputLabel value="Data de Abertura" />
-					<p:calendar />
+					<p:inputText value="#{caixaBean.caixa.dataAbertura}">
+						<f:convertDateTime locale="pt_BR" />
+					</p:inputText>
 
 					<p:outputLabel value="Valor da Abertura" />
-					<p:inputText />
+					<p:inputText value="#{caixaBean.caixa.valorAbertura}" />
 
 					<p:outputLabel value="Funcionario" />
-					<p:selectOneMenu>
+					<p:selectOneMenu value="#{caixaBean.caixa.funcionario}"
+						converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um Funcionario" />
+						<f:selectItems value="#{caixaBean.funcionarios}" var="funcionario"
+							itemValue="#{funcionario}" itemLabel="#{funcionario.pessoa.nome}" />
 					</p:selectOneMenu>
 
 					<h:panelGrid columns="1">

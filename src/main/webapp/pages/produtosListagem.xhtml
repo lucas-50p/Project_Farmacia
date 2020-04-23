@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- metadata: Uma sequencias de comandos que eu posso fazer   -->
+	<f:metadata>
+		<f:viewAction action="#{produtoListagemBean.listar}"/>
+	</f:metadata>
+	
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Produtos - Listagem</title>
+	</h:head>
+
+<h:body>
+		<h:form id="formListagem">
+			<p:panel header="Produtos - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{produtoListagemBean.produtos}" var="produto"
+					rows="5" paginatorPosition="bottom">
+					<f:facet name="footer">
+						<p:commandButton icon="ui-icon-plus" />
+
+						<p:commandButton icon="ui-icon-print" />
+
+					</f:facet>
+					<!-- Locale: convert o ponto para virgula
+				minFractionDigits: quantos numeros depois da virgula -->
+					<p:column headerText="Descrição">
+						<h:outputText value="#{produto.descricao}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Quantidade">
+						<h:outputText value="#{produto.quantidade}" />
+					</p:column>
+
+					<p:column headerText="Preço">
+						<h:outputText value="#{produto.preco}" />
+					</p:column>
+
+					<p:column headerText="Fabricante">
+						<h:outputText value="#{produto.fabricante.descricao}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<!-- EXCLUIR -->
+						<p:commandButton icon="ui-icon-trash" />
+
+						<!-- EDITAR -->
+						<p:commandButton icon="ui-icon-pencil" />
+					</p:column>
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+	
+	</h:body>
+
+</html>

@@ -32,7 +32,7 @@ public class AutenticacaoBean {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
@@ -46,21 +46,27 @@ public class AutenticacaoBean {
 		usuario = new Usuario();
 		usuario.setPessoa(new Pessoa());
 	}
-	
+
+	/*
+	 * Todo variavel criado dentro do metodo é utilizado so no metodo, a partir do
+	 * momento em que sair do metodo ela será excluida já as variaveis criadas na
+	 * classe ficam vivam até desligar o servidor
+	 */
 	public void autenticar() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			Usuario usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf() , usuario.getSenha());
-			
+			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf(), usuario.getSenha());
+
 			if (usuarioLogado == null) {
 				Messages.addGlobalError("CPF e/ou senha incorretos");
 				return;
 			}
-			
-			Faces.redirect("./pages/principal.xhtml");//direcionar para pag principal
+
+			Faces.redirect("./pages/principal.xhtml");// direcionar para pag principal
 		} catch (IOException erro) {
 			erro.printStackTrace();
 			Messages.addGlobalError(erro.getMessage());
 		}
 	}
+
 }

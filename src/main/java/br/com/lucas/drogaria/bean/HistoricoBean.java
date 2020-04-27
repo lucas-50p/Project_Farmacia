@@ -55,12 +55,9 @@ public class HistoricoBean implements Serializable {
 
 	@PostConstruct // Quando a tela for carregada
 	public void novo() {
-		
-			historico = new Historico();//Criar para no dar null exception
-			produto = new Produto();
-			exibiPainelDados = false;
-		
-
+		historico = new Historico();//Criar para no dar null exception
+		produto = new Produto();
+		exibiPainelDados = false;
 	}
 
 	public void buscar() {
@@ -89,6 +86,7 @@ public class HistoricoBean implements Serializable {
 			
 			HistoricoDAO historicoDAO = new HistoricoDAO();
 			historicoDAO.salvar(historico);
+			
 			
 			Messages.addGlobalInfo("Histórico salvo com sucesso");
 		} catch (RuntimeException erro) {

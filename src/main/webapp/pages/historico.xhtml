@@ -7,8 +7,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 
-
-
 	<ui:define name="conteudo">
 
 		<!-- validateLongRange: o valor min e max do produtos 
@@ -25,22 +23,20 @@
 						<f:validateLongRange minimum="1" maximum="999999999999" />
 					</p:inputText>
 					<p:commandButton icon="ui-icon-search"
-						update=":mensagem :formulario:painelDados"
+						update="@form"
 						actionListener="#{historicoBean.buscar}"
 						process="@this :formulario:codigo" />
 				</h:panelGrid>
 
 				<!-- panelGroup: Componente de marcação, marca o começo e o fim; ele gera spam ou div -->
-				<h:panelGroup id="painelDados" layout="block">
-					<h:panelGrid columns="2"
-						rendered="#{historicoBean.exibiPainelDados}">
+				<h:panelGroup id="painelDados">
+					<h:panelGrid columns="2">
 						<p:outputLabel value="Descrição: "></p:outputLabel>
 						<h:outputText value="#{historicoBean.produto.descricao}"></h:outputText>
 
 						<p:outputLabel value="Preço: "></p:outputLabel>
 						<h:outputText value="#{historicoBean.produto.preco}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
-
 						</h:outputText>
 
 						<p:outputLabel value="Quantidade: "></p:outputLabel>
@@ -55,19 +51,13 @@
 							requiredMessage="O campo Observações é obrigatório" rows="5"
 							cols="50" autoResize="false"
 							value="#{historicoBean.historico.observacoes}" />
-
-						<h:panelGrid columns="1"
-							rendered="#{historicoBean.exibiPainelDados}">
-							<p:commandButton value="Salvar"
-								actionListener="#{historicoBean.salvar}" update=":mensagem" />
-						</h:panelGrid>
-
 					</h:panelGrid>
 
+					<h:panelGrid columns="1">
+						<p:commandButton value="Salvar" actionListener="#{historicoBean.salvar}" update=":mensagem" />
+					</h:panelGrid>
 				</h:panelGroup>
-
 			</p:panel>
-
 		</h:form>
 	</ui:define>
 </ui:composition>

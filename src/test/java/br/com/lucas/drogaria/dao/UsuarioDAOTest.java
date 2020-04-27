@@ -13,7 +13,7 @@ public class UsuarioDAOTest {
 	@Ignore
 	public void salvar(){
 		PessoaDAO pessoaDAO = new PessoaDAO();
-		Pessoa pessoa = pessoaDAO.buscar(2L);
+		Pessoa pessoa = pessoaDAO.buscar(46L);
 		
 		System.out.println("Pessoa Encontrada");
 		System.out.println("Nome: " + pessoa.getNome());
@@ -28,7 +28,7 @@ public class UsuarioDAOTest {
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());//Nome do algoritmo
 		usuario.setSenha(hash.toHex());//Vai Criptografa toHex gerar:(https://www.md5hashgenerator.com/)
 		
-		usuario.setTipo('G');//Tipo 'A' administrador
+		usuario.setTipo('B');//Tipo 'A' administrador
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);
@@ -37,8 +37,9 @@ public class UsuarioDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void autenticar() {
-		String cpf= "411.113.121-31";
+		String cpf= "412.343.243-24";
 		String senha = "q1w2e3r4";
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();

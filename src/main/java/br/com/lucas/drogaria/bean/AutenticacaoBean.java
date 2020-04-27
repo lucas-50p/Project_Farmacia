@@ -1,6 +1,7 @@
 package br.com.lucas.drogaria.bean;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -49,8 +50,8 @@ public class AutenticacaoBean {
 
 	/*
 	 * Todo variavel criado dentro do metodo é utilizado so no metodo, a partir do
-	 * momento em que sair do metodo ela será excluida já as variaveis criadas na
-	 * classe ficam vivam até desligar o servidor
+	 * momento em que sair do metodo ela será excluida, já as variaveis criadas na
+	 * classe, ficam vivam até desligar o servidor
 	 */
 	public void autenticar() {
 		try {
@@ -67,6 +68,23 @@ public class AutenticacaoBean {
 			erro.printStackTrace();
 			Messages.addGlobalError(erro.getMessage());
 		}
+	}
+	
+	/*o atributo rendered recebe um boolean que diz se o componente será renderizado.
+		* Se você setar true o componente será renderizado. *
+		* Se você setar false não será.*/
+	
+	/*Uma permissão por vez da lista de permissões
+	 * Verificar, usuario Logado, eqauls(igual) a permissão
+	 * return true
+	 * Se ele sai do for e retorno false*/
+	public boolean temPermissoes(List<String> permissoes) {
+		for(String permissao : permissoes) {
+			if (usuarioLogado.getTipo() == permissao.charAt(0)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

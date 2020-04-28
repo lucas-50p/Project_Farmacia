@@ -1,6 +1,10 @@
 package br.com.lucas.drogaria.bean;
 
+import java.awt.Desktop.Action;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +23,8 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.lucas.drogaria.dao.FabricanteDAO;
@@ -45,6 +51,8 @@ public class ProdutoBean implements Serializable {
 	private Produto produto;
 	private List<Produto> produtos;
 	private List<Fabricante> fabricantes;
+	
+	 private StreamedContent foto;
 
 	public Produto getProduto() {
 		return produto;
@@ -68,6 +76,14 @@ public class ProdutoBean implements Serializable {
 
 	public void setFabricantes(List<Fabricante> fabricantes) {
 		this.fabricantes = fabricantes;
+	}
+	
+	public StreamedContent getFoto() {
+		return foto;
+	}
+
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
 	}
 
 	@PostConstruct // Chamar quando a tela criada
@@ -145,7 +161,7 @@ public class ProdutoBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.excluir(produto);
 
-			Path arquivo = Paths.get("C:\\ws-delfino-upload/" + produto.getCodigo() + ".png");
+			Path arquivo = Paths.get("C:/ws-delfino-upload/" + produto.getCodigo() + ".png");
 			Files.deleteIfExists(arquivo);
 			
 			produtos = produtoDAO.listar();
@@ -195,5 +211,21 @@ public class ProdutoBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatorio!");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void download(ActionEvent evento) {
+		//Ele serve para passar o endereço
+		//InputStream(java.io): guarda no input...
+		try {
+			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
+
+			InputStream strem = new FileInputStream("C:/ws-delfino-upload/" + produto.getCodigo() + ".png");
+			
+			foto = new DefaultStreamedContent(strem, "image/png", + produto.getCodigo() + ".png");
+		} catch (FileNotFoundException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar efetuar o download da foto");
+			erro.printStackTrace();
+		}
+		
 	}
 }

@@ -2,11 +2,14 @@ package br.com.lucas.drogaria.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,6 +31,10 @@ public class Venda extends GenericDomain{
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
+	
+	//mappedBy = "venda": amarra itemVenda(venda - many to one)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "venda")//Eager diz para carregar todos os dados itens vendas
+	private List<ItemVenda> itensVenda;//Uma venda pode ter varios itens
 
 	public Date getHorario() {
 		return horario;
@@ -59,6 +66,14 @@ public class Venda extends GenericDomain{
 
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
+	}
+
+	public List<ItemVenda> getItensVenda() {
+		return itensVenda;
+	}
+
+	public void setItensVenda(List<ItemVenda> itensVenda) {
+		this.itensVenda = itensVenda;
 	}
 	
 	

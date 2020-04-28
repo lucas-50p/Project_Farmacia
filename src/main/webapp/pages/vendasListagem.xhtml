@@ -15,7 +15,9 @@
 				ele foi um campo obrigatorio o primeFace automaticamente já already desenha-->
 				<!-- value="#{vendaBean.cidades}": vinculei manageBean com o meu xhtml
 				Var: É o cursor
-				actionListene: chama um metodo do managebean -->
+				actionListene: chama um metodo do managebean
+				rowExpasion: O que mostrar a mais informações
+				https://www.primefaces.org/showcase/ui/data/datatable/expansion.xhtml-->
 				
 	<ui:define name="metadata">
 		<f:metadata>
@@ -26,13 +28,14 @@
 	<ui:define name="conteudo">
 
 		<h:form id="formListagem">
-			
-
 			<p:panel header="Vendas - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{vendaBean.vendas}" var="venda" rows="5"
+					paginator="true" value="#{vendaBean.vendas}" var="venda" rows="10"
 					paginatorPosition="bottom">
-	
+				
+					<p:column style="width: 16px;">
+						<p:rowToggler/>
+					</p:column>
 	
 					<p:column headerText="Horário" sortBy="#{venda.horario}">
 						<h:outputText value="#{venda.horario}">
@@ -59,7 +62,25 @@
 					</p:column>
 
 
-
+			<p:rowExpansion>
+						<p:dataTable emptyMessage="Nenhum registro encontrado."
+							value="#{venda.itensVenda}" var="itemVenda">
+							<p:column headerText="Produto">
+								<p:graphicImage />
+								<h:outputText value="#{itemVenda.produto.descricao}" />
+							</p:column>
+							
+							<p:column headerText="Qtde">
+								<h:outputText value="#{itemVenda.quantidade}" />
+							</p:column>
+							
+							<p:column headerText="Preço">
+								<h:outputText value="#{itemVenda.precoParcial}">
+									<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:rowExpansion>
 				</p:dataTable>
 			</p:panel>
 		</h:form>

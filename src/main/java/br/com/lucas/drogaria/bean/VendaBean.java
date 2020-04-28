@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -39,6 +38,8 @@ public class VendaBean implements Serializable {
 	private List<ItemVenda> itensVenda;
 	private List<Cliente> clientes;
 	private List<Funcionario> funcionarios;
+	
+	private List<Venda> vendas;
 
 	public Venda getVenda() {
 		return venda;
@@ -80,7 +81,15 @@ public class VendaBean implements Serializable {
 		this.funcionarios = funcionarios;
 	}
 
-	@PostConstruct
+	public List<Venda> getVendas() {
+		return vendas;
+	}
+	
+	public void setVendas(List<Venda> vendas) {
+		this.vendas = vendas;
+	}
+	
+	//@PostConstruct
 	public void novo() {
 		try {
 			venda = new Venda();
@@ -94,6 +103,11 @@ public class VendaBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar carregar a tela de vendas");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void listar() {
+		VendaDAO vendaDAO = new VendaDAO();
+		vendas = vendaDAO.listar("horario");
 	}
 
 	public void adicionar(ActionEvent evento) {

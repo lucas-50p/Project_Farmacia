@@ -7,11 +7,19 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 
+	<!-- widgetVar="":(camando PF) É um segundo id para componentes do prime, 
+		esse segundo nome que uso para chamar o comando do prime em cima dos componentes.
+		PF: comando eu consigo exibir e ocultar dialog
+		f:facet name="filter":Substituir o filtro padrão(campo de entrada texto) para um personalizado
+		itemValue: que voçê salva
+		itemLabel: Mostra
+		onchage:quando voce click no bottom(ou no outra) ele chama o PF(componente)-->
+
 	<ui:define name="conteudo">
 
 		<h:form id="formListagem">
 			<p:panel header="Clientes - Listagem">
-				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				<p:dataTable id="tabela" widgetVar="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{clienteBean.clientes}" var="cliente"
 					rows="5" paginatorPosition="bottom">
 					<f:facet name="footer">
@@ -41,7 +49,16 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Liberado" sortBy="#{cliente.liberado}">
+					<p:column headerText="Liberado" sortBy="#{cliente.liberado}"
+						filterBy="#{cliente.liberado}">
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('tabela').filter()">
+								<f:selectItem itemValue="" itemLabel="Todos"/>
+								<f:selectItem itemValue="true" itemLabel="Sim"/>
+								<f:selectItem itemValue="false" itemLabel="Não"/>
+							</p:selectOneButton>
+						</f:facet>
+						
 						<p:selectBooleanCheckbox value="#{cliente.liberado}"
 							disabled="true" />
 					</p:column>

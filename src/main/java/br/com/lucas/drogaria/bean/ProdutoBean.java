@@ -1,6 +1,6 @@
 package br.com.lucas.drogaria.bean;
 
-import java.awt.Desktop.Action;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -7,6 +7,10 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 	
+	<!-- Output:exibir
+		Editable:true: campo editavel
+		editMode="": editar clicando na celula -->
+	
 	<f:metadata>
 		<f:viewAction action="#{vendaBean.novo}"/>
 	</f:metadata>
@@ -54,7 +58,9 @@
 				<p:dataTable id="tabelaCesta"
 					emptyMessage="Nenhum registro encontrado." paginator="true"
 					value="#{vendaBean.itensVenda}" var="itemVenda" rows="5"
-					paginatorPosition="bottom">
+					paginatorPosition="bottom"
+					editable="true"
+					editMode="cell">
 
 					<p:column headerText="Descrição">
 						<h:outputText value="#{itemVenda.produto.descricao}">
@@ -68,7 +74,15 @@
 					</p:column>
 
 					<p:column headerText="Qtde.">
-						<h:outputText value="#{itemVenda.quantidade}" />
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{itemVenda.quantidade}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{itemVenda.quantidade}"/>
+							</f:facet>
+						</p:cellEditor>
+						
 					</p:column>
 
 					<p:column headerText="Preço Parcial">

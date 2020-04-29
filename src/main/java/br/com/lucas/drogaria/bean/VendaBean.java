@@ -160,9 +160,17 @@ public class VendaBean implements Serializable {
 		
 		for (int posicao = 0; posicao < itensVenda.size(); posicao++) {
 			ItemVenda itemVenda = itensVenda.get(posicao);
-			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getPrecoParcial()));
+			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getPrecoParcial()));//Atualização do preço
 			
 		}
+	}
+	
+	public void atualizarPrecoParcial() {
+		for (ItemVenda itemVenda : this.itensVenda) {
+			itemVenda.setPrecoParcial(itemVenda.getProduto().getPreco().multiply(new BigDecimal(itemVenda.getQuantidade())));//Ele vai pegar item por item e atualizar o preço, multiplicando ele
+		}
+		
+		this.calcular();
 	}
 	
 	public void finalizar(){

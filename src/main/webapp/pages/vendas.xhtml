@@ -9,7 +9,9 @@
 	
 	<!-- Output:exibir
 		Editable:true: campo editavel
-		editMode="": editar clicando na celula -->
+		editMode="": editar clicando na celula 
+		p:remoteCommand: comando(prime) funções javaScript possam chamar métodos no manageBean
+		<p:ajax event="cellEdit" oncomplete="rc()"/> name="rc" (pode ser outro nome):Quando acabar requisão ele chama remoteCommand -->
 	
 	<f:metadata>
 		<f:viewAction action="#{vendaBean.novo}"/>
@@ -52,7 +54,10 @@
 					</p:column>
 				</p:dataTable>
 			</p:panel>
-
+			
+			<p:remoteCommand name="rc" 
+				actionListener="#{vendaBean.atualizarPrecoParcial}" 
+				update=":formulario:tabelaCesta :formulario:painelFinalizacao"/>
 
 			<p:panel header="Cesta de Compras">
 				<p:dataTable id="tabelaCesta"
@@ -61,6 +66,8 @@
 					paginatorPosition="bottom"
 					editable="true"
 					editMode="cell">
+					
+					<p:ajax event="cellEdit" oncomplete="rc()"/>
 
 					<p:column headerText="Descrição">
 						<h:outputText value="#{itemVenda.produto.descricao}">

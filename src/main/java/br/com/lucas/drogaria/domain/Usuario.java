@@ -19,10 +19,10 @@ public class Usuario extends GenericDomain {
 	@Transient
 	private String senhaSemCriptografia;//Essa senha no vai ser guardada no banco, continua mostrando os caracteres
 	
-	@Column(nullable = false)
-	private Character tipo;
+	/*@Column(nullable = false)
+	private Character tipo;*/
 	
-	@Column(nullable = true)//Cria primeiro (nullable = true), para não apagar informações no banco de dados, no da erro ao criar
+	@Column(nullable = false)//Cria primeiro (nullable = true), para não apagar informações no banco de dados, no da erro ao criar
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipoUsuario;
 	
@@ -50,11 +50,11 @@ public class Usuario extends GenericDomain {
 		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
-	public Character getTipo() {
+	/*public Character getTipo() {
 		return tipo;
-	}
+	}*/
 	
-	@Transient
+	/*@Transient
 	public String getTipoFormatado() {
 		String tipoFormatado = null;
 		
@@ -67,12 +67,12 @@ public class Usuario extends GenericDomain {
 		}
 		
 		return tipoFormatado;
-	}
+	}*/
 	
 
-	public void setTipo(Character tipo) {
+	/*public void setTipo(Character tipo) {
 		this.tipo = tipo;
-	}
+	}*/
 
 	public Boolean getAtivo() {
 		return ativo;
@@ -101,4 +101,14 @@ public class Usuario extends GenericDomain {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+	
+	
 }

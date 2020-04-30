@@ -6,11 +6,12 @@ import org.junit.Test;
 
 import br.com.lucas.drogaria.domain.Pessoa;
 import br.com.lucas.drogaria.domain.Usuario;
+import br.com.lucas.drogaria.enumeracao.TipoUsuario;
 
 public class UsuarioDAOTest {
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void salvar(){
 		PessoaDAO pessoaDAO = new PessoaDAO();
 		Pessoa pessoa = pessoaDAO.buscar(83L);
@@ -28,7 +29,7 @@ public class UsuarioDAOTest {
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());//Nome do algoritmo
 		usuario.setSenha(hash.toHex());//Vai Criptografa toHex gerar:(https://www.md5hashgenerator.com/)
 		
-		usuario.setTipo('G');//Tipo 'A' administrador
+		usuario.setTipoUsuario(TipoUsuario.GERENTE);
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);

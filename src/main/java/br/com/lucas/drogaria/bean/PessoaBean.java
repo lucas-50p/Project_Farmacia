@@ -2,14 +2,20 @@ package br.com.lucas.drogaria.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
 import org.omnifaces.util.Messages;
+
+import com.google.gson.Gson;
 
 import br.com.lucas.drogaria.dao.CidadeDAO;
 import br.com.lucas.drogaria.dao.EstadoDAO;
@@ -78,17 +84,23 @@ public class PessoaBean implements Serializable {
 		this.pessoas = pessoas;
 	}
 
+	//Mudança que por tras no está usando o dao direto; Ele está usando agora o Web Service
 	public void novo() {
 		try {
 			pessoa = new Pessoa();
 			
 			estado = new Estado();
+			
+			//Essas 6 linhas para carregamento do estado
+			Client cliente = ClientBuilder.newClient();//Criou um cliente
+			WebTarget caminho = cliente.target("http://127.0.0.1:8081/Drogaria/rest/estado");//Conectou com web service
+			String json = caminho.request().get(String.class);//Mandei executar o comando(resultado gson); Get(FabricanteServ...) e pega o tipo que é String
+			Gson gson = new Gson();//Usando essa api
+			Estado[] vetor = gson.fromJson(json, Estado[].class);//converto para retorno json;(Vetor de estado)Vai converter o resultado em um vector de estado
+			estados= Arrays.asList(vetor);//Vetor de estados convertido para array list, converter para ArrayList
 
-			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
-
-			cidades = new ArrayList<Cidade>();// Instanciando a listagem da Cidade vazia, aparecer quando click no
-												// estado
+			cidades = new ArrayList<Cidade>();// Instanciando a listagem da Cidade vazia, aparecer quando click no estado
+												
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar gerar uma pessoa nova");
 			erro.printStackTrace();
@@ -159,8 +171,19 @@ public class PessoaBean implements Serializable {
 		//cidades = new ArrayList<Cidade>();: No diamante pode colocar cidade ou no(escolha)
 		try {
 				if (estado != null) {
-					CidadeDAO cidadeDAO = new CidadeDAO();
-					cidades = cidadeDAO.buscarPorEstado(estado.getCodigo());
+					Client cliente = ClientBuilder.newClient();//Criou um cliente
+					WebTarget caminho = cliente.target("http://127.0.0.1:8081/Drogaria/rest/cidade/{estadoCodigo}").resolveTemplate("estadoCodigo",estado.getCodigo());//Na esquerda o nome do parametro,Pega o @Path(parametro) - Cidade service,Na direita value do object
+					String json = caminho.request().get(String.class);//Mandei executar o comando(resultado gson); Get(FabricanteServ...) e pega o tipo que é String
+					Gson gson = new Gson();//Usando essa api
+					Cidade[] vetor = gson.fromJson(json, Cidade[].class);//converto para retorno json;(Vetor de estado)Vai converter o resultado em um vector de estado
+					cidades = Arrays.asList(vetor);//Vetor de estados convertido para array list, converter para ArrayList
+
+					//cidades = new ArrayList<Cidade>();// Instanciando a listagem da Cidade vazia, aparecer quando click no estado
+					
+					
+					//Antigo
+					//CidadeDAO cidadeDAO = new CidadeDAO();
+					//cidades = cidadeDAO.buscarPorEstado(estado.getCodigo());//value do object
 				}else {
 					cidades = new ArrayList<>();
 				}

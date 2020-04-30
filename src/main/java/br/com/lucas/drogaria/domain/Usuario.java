@@ -2,9 +2,13 @@ package br.com.lucas.drogaria.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
+import br.com.lucas.drogaria.enumeracao.TipoUsuario;
 
 @SuppressWarnings("serial")
 @Entity
@@ -17,6 +21,11 @@ public class Usuario extends GenericDomain {
 	
 	@Column(nullable = false)
 	private Character tipo;
+	
+	@Column(nullable = true)//Cria primeiro (nullable = true), para não apagar informações no banco de dados, no da erro ao criar
+	@Enumerated(EnumType.STRING)
+	private TipoUsuario tipoUsuario;
+	
 	
 	@Column(nullable = false)
 	private Boolean ativo;
